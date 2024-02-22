@@ -9,4 +9,3 @@ Make everything look pretty?!?!?!
 
 
 <!-- FOLLOW UP -->
-Check all iterations of listName / newListName

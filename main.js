@@ -25,7 +25,7 @@ function display() {
     //Display list of lists
     let listsHTML = ''
     lists.forEach(list => {
-        listsHTML += `<li class="list-group-item-action ">${list.listName}</li>`;
+        listsHTML += `<li class="list-group-item-action ">${lists.listName}</li>`;
     })
     listOfLists.innerHTML = listsHTML;
 
