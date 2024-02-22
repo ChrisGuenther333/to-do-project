@@ -5,7 +5,7 @@ let listOfLists = document.querySelector('.listOfLists');
 // array lists contains objects {listName: name, items: []}
 const lists = []
 
-//When button is clicked it creates new list and calls displayListOfLists()
+//When button is clicked it creates new list and calls display()
 newListBtn.addEventListener('click', () => {
     if (newListName.value !== '') {
         lists.push({listName: newListName.value, items: []});
@@ -15,14 +15,29 @@ newListBtn.addEventListener('click', () => {
         window.alert('Please enter a list name.');
     }
 
-    displayListOfLists();
+    display();
 });
+//Defaults to displaying first list
+let currentList = lists[0]
 
 
-function displayListOfLists() {
-    let inner = ''
-    lists.forEach(i => {
-        inner += `<li class="list-group-item-action ">${i.listName}</li>`;
+function display() {
+    //Display list of lists
+    let listsHTML = ''
+    lists.forEach(list => {
+        listsHTML += `<li class="list-group-item-action ">${list.listName}</li>`;
     })
-    listOfLists.innerHTML = inner;
+    listOfLists.innerHTML = listsHTML;
+
+    //Display current list
+    document.querySelector('.currentList').innerHTML = currentList.listName;
+
+    //Display items of current list
+    let itemsHTML = ''
+    itemsHTML +=  '<ul class="list-group-flush">'
+    currentList.items.forEach(item => {
+        itemsHTML += `<li class="list-group-item-action">${item.task}</li>`;
+    });
+    itemsHTML += '</ul>'
+    document.querySelector('.currentList').innerHTML += itemsHTML;
 }
