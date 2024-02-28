@@ -20,13 +20,26 @@ newListBtn.addEventListener('click', () => {
 //Defaults to displaying first list
 let currentList = lists[0]
 
+function addTask() {
+    const newTask = document.querySelector('.enterTask');
+    if (newTask.value !== '') {
+        currentList.items.push({task: newTask.value, complete: false});
+        newTask.value = '';
+    }
+    else {
+        window.alert('Please enter a task.');
+    }
+    display();
+}
+
+
 
 function display() {
     //Display list of lists
     let listsHTML = ''
     lists.forEach(list => {
-        listsHTML += `<li class="list-group-item-action ">${lists.listName}</li>`;
-    })
+        listsHTML += `<li class="list-group-item-action ">${list.listName}</li>`;
+    });
     listOfLists.innerHTML = listsHTML;
 
     //Display current list
