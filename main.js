@@ -10,6 +10,13 @@ let currentList = lists[0]
 
 //Create list button
 newListBtn.addEventListener('click', addList);
+//Global eventListener checking for dynamically created buttons
+document.addEventListener('click', event => {
+    //Checking if delete list button was clicked
+    if (event.target.classList.contains('dltListBtn')) {
+        deleteList();
+    }
+});
 
 //Creates new list and calls display()
 function addList() {
@@ -23,6 +30,10 @@ function addList() {
 
     display();
 }
+
+function deleteList() {
+
+}
 //Creates new task and calls display()
 function addTask() {
     const newTask = document.querySelector('.enterTask');
@@ -35,12 +46,21 @@ function addTask() {
     }
     display();
 }
-//Renders list of lists, current list, and its tasks
+
+function deleteTask() {
+
+}
+
+function markTaskComplete() {
+
+}
+//Renders list of lists, current list, its tasks, and buttons
 function display() {
     //Display list of lists
     let listsHTML = ''
     lists.forEach(list => {
-        listsHTML += `<li class="list-group-item-action ">${list.listName}</li>`;
+        listsHTML += `<li class="list-group-item-action ">${list.listName}
+        <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
     });
     listOfLists.innerHTML = listsHTML;
 
