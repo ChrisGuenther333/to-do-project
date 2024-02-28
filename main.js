@@ -5,8 +5,14 @@ let listOfLists = document.querySelector('.listOfLists');
 // array lists contains objects {listName: name, items: []}
 const lists = []
 
-//When button is clicked it creates new list and calls display()
-newListBtn.addEventListener('click', () => {
+//Defaults to displaying first list
+let currentList = lists[0]
+
+//Create list button
+newListBtn.addEventListener('click', addList);
+
+//Creates new list and calls display()
+function addList() {
     if (newListName.value !== '') {
         lists.push({listName: newListName.value, items: []});
         newListName.value = '';
@@ -16,10 +22,8 @@ newListBtn.addEventListener('click', () => {
     }
 
     display();
-});
-//Defaults to displaying first list
-let currentList = lists[0]
-
+}
+//Creates new task and calls display()
 function addTask() {
     const newTask = document.querySelector('.enterTask');
     if (newTask.value !== '') {
@@ -31,9 +35,7 @@ function addTask() {
     }
     display();
 }
-
-
-
+//Renders list of lists, current list, and its tasks
 function display() {
     //Display list of lists
     let listsHTML = ''
