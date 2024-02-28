@@ -1,6 +1,7 @@
 const newListName = document.querySelector('.enterListName');
 let newListBtn = document.querySelector('.createListBtn');
 let listOfLists = document.querySelector('.listOfLists');
+let docCurrentList = document.querySelector('.currentList');
 
 // array lists contains objects {listName: name, items: []}
 const lists = []
@@ -65,7 +66,9 @@ function display() {
     listOfLists.innerHTML = listsHTML;
 
     //Display current list
-    document.querySelector('.currentList').innerHTML = currentList.listName;
+    docCurrentList.innerHTML = currentList.listName;
+    docCurrentList.innerHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
+    docCurrentList.innerHTML += `<button>Add Task</button>`;
 
     //Display items of current list
     let itemsHTML = ''
@@ -74,5 +77,5 @@ function display() {
         itemsHTML += `<li class="list-group-item-action">${item.task}</li>`;
     });
     itemsHTML += '</ul>'
-    document.querySelector('.currentList').innerHTML += itemsHTML;
+    docCurrentList.innerHTML += itemsHTML;
 }

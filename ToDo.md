@@ -8,3 +8,4 @@ Make everything look pretty?!?!?!
 
 
 <!-- FOLLOW UP -->
+Line 69 not working, currentList not being recognized
