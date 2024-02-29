@@ -11,6 +11,12 @@ let currentList = lists[0]
 
 //Create list button
 newListBtn.addEventListener('click', addList);
+//Create list with enter key
+newListName.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+    addList();
+    }
+});
 //Global eventListener checking for dynamically created buttons
 document.addEventListener('click', event => {
     //Checking if delete list button was clicked
