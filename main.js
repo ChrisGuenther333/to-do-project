@@ -15,7 +15,12 @@ newListBtn.addEventListener('click', addList);
 document.addEventListener('click', event => {
     //Checking if delete list button was clicked
     if (event.target.classList.contains('dltListBtn')) {
-        deleteList();
+        for (let key in lists) {
+            if (lists[key].listName === event.target.parentNode.innerText.trim()) {
+                lists.splice(lists[key], 1);
+                display();
+            }
+        } 
     }
 });
 
@@ -32,10 +37,8 @@ function addList() {
     display();
 }
 
-function deleteList() {
-
-}
 //Creates new task and calls display()
+
 function addTask() {
     const newTask = document.querySelector('.enterTask');
     if (newTask.value !== '') {
@@ -65,12 +68,13 @@ function display() {
     });
     listOfLists.innerHTML = listsHTML;
 
-    //Display current list
+    // //Display current list
+
     docCurrentList.innerHTML = currentList.listName;
     docCurrentList.innerHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
     docCurrentList.innerHTML += `<button>Add Task</button>`;
 
-    //Display items of current list
+    // Display items of current list
     let itemsHTML = ''
     itemsHTML +=  '<ul class="list-group-flush">'
     currentList.items.forEach(item => {
