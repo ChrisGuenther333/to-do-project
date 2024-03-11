@@ -6,8 +6,7 @@ let docCurrentList = document.querySelector('.currentList');
 // array lists contains objects {listName: name, items: []}
 const lists = []
 
-//Defaults to displaying first list
-let currentList = lists[0];
+let currentList;
 
 //Create list button
 newListBtn.addEventListener('click', addList);
@@ -43,6 +42,15 @@ document.addEventListener('click', event => {
     else if (event.target.classList.contains('enterTaskBtn')) {
         addTask();
     }
+
+    else if (event.target.classList.contains('dltTaskBtn')) {
+        for (let key in currentList.items) {
+            if (currentList.items[key].task === event.target.parentNode.innerText.trim()) {
+                currentList.items.splice(currentList.items[key], 1);
+                display();
+            }
+        } 
+    }
 });
 //Global eventListener checking for enter key on dynamically created buttons
 document.addEventListener('keydown', event => {
@@ -58,7 +66,7 @@ function addList() {
     let alreadyList = false;
     if (newListName.value !== '') {
         for (item in lists) {
-            if (lists[item].listName === newListName.value) {
+            if (lists[item].listName.toUpperCase() === newListName.value.toUpperCase()) {
                 alreadyList = true;
             }
         }
@@ -81,19 +89,28 @@ function addList() {
 //Creates new task and calls display()
 
 function addTask() {
-    const newTask = document.querySelector('.enterTaskName');
-    if (newTask.value !== '') {
-        currentList.items.push({task: newTask.value, complete: false});
-        newTask.value = '';
+    const newTaskName = document.querySelector('.enterTaskName');
+    if (newTaskName.value !== '') {
+        let alreadyTask = false;
+
+        for (key in currentList.items) {
+            if (currentList.items[key].task.toUpperCase() === newTaskName.value.toUpperCase()) {
+                alreadyTask = true;
+            }
+        }
+        if (alreadyTask === false) {
+            currentList.items.push({task: newTaskName.value, complete: false});
+            newTaskName.value = '';
+        }
+        else {
+            window.alert(`You've already created that task`);
+            newTaskName.value = '';
+        }
     }
     else {
         window.alert('Please enter a task.');
     }
     display();
-}
-
-function deleteTask() {
-
 }
 
 function markTaskComplete() {
@@ -119,9 +136,10 @@ function display() {
 
     // Display items of current list
     let itemsHTML = ''
-    itemsHTML +=  '<ul class="list-group-flush">'
+    itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
     currentList.items.forEach(item => {
-        itemsHTML += `<li class="list-group-item-action">${item.task}</li>`;
+        itemsHTML += `<li class="list-group-item-action">${item.task}
+        <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
     });
     itemsHTML += '</ul>'
     docCurrentList.innerHTML += itemsHTML;

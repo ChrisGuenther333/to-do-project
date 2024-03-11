@@ -1,15 +1,15 @@
 <!-- JAVASCRIPT -->
-Be able to edit/delete/check/uncheck items
+Be able to edit/check/uncheck items
 
 
 <!-- SCSS / Bootstrap -->
 Customize layout, button and inputs
-Make everything look pretty?!?!?!
+Make everything look pretty
 
 
 <!-- FOLLOW UP -->
 
 
 <!-- BUGS -->
-If two lists share name, they also share items
-    If one is deleted it breaks everything
+When delete button is clicked on lists and tasks, it deletes wrong one
+    This was working a few commits ago I'm pretty sure so something must have broke along the way
