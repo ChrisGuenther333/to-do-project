@@ -17,7 +17,8 @@ newListName.addEventListener('keydown', event => {
     addList();
     }
 });
-//Global eventListener checking for dynamically created buttons
+
+//Global eventListener checking for clicks on dynamically created buttons
 document.addEventListener('click', event => {
     //Checking if list was clicked
     if (event.target.classList.contains(`list`)) {
@@ -38,6 +39,10 @@ document.addEventListener('click', event => {
             }
         } 
     }
+
+    else if (event.target.classList.contains('enterTaskBtn')) {
+        addTask();
+    }
 });
 
 //Creates new list and calls display()
@@ -56,7 +61,7 @@ function addList() {
 //Creates new task and calls display()
 
 function addTask() {
-    const newTask = document.querySelector('.enterTask');
+    const newTask = document.querySelector('.enterTaskName');
     if (newTask.value !== '') {
         currentList.items.push({task: newTask.value, complete: false});
         newTask.value = '';
@@ -89,7 +94,7 @@ function display() {
     currentListHTML += currentList.listName;
     currentListHTML += '<br>'
     currentListHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
-    currentListHTML += `<button>Add Task</button>`;
+    currentListHTML += `<button class="enterTaskBtn">Add Task</button>`;
     docCurrentList.innerHTML = currentListHTML;
 
     // Display items of current list
