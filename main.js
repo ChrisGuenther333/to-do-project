@@ -7,7 +7,7 @@ let docCurrentList = document.querySelector('.currentList');
 const lists = []
 
 //Defaults to displaying first list
-let currentList;
+let currentList = lists[0];
 
 //Create list button
 newListBtn.addEventListener('click', addList);
@@ -55,9 +55,21 @@ document.addEventListener('keydown', event => {
 
 //Creates new list and calls display()
 function addList() {
+    let alreadyList = false;
     if (newListName.value !== '') {
-        lists.push({listName: newListName.value, items: []});
-        newListName.value = '';
+        for (item in lists) {
+            if (lists[item].listName === newListName.value) {
+                alreadyList = true;
+            }
+        }
+        if (alreadyList === false) {
+            lists.push({listName: newListName.value, items: []});
+            newListName.value = '';
+        }
+        else {
+            window.alert(`You've already created a list with that name`);
+            newListName.value = '';
+        }
     }
     else {
         window.alert('Please enter a list name.');
