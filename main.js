@@ -33,7 +33,7 @@ document.addEventListener('click', event => {
     else if (event.target.classList.contains('dltListBtn')) {
         for (let key in lists) {
             if (lists[key].listName === event.target.parentNode.innerText.trim()) {
-                lists.splice(lists[key], 1);
+                lists.splice(key, 1);
                 display();
             }
         } 
@@ -46,7 +46,7 @@ document.addEventListener('click', event => {
     else if (event.target.classList.contains('dltTaskBtn')) {
         for (let key in currentList.items) {
             if (currentList.items[key].task === event.target.parentNode.innerText.trim()) {
-                currentList.items.splice(currentList.items[key], 1);
+                currentList.items.splice(key, 1);
                 display();
             }
         } 
@@ -65,8 +65,8 @@ document.addEventListener('keydown', event => {
 function addList() {
     let alreadyList = false;
     if (newListName.value !== '') {
-        for (item in lists) {
-            if (lists[item].listName.toUpperCase() === newListName.value.toUpperCase()) {
+        for (key in lists) {
+            if (lists[key].listName.toUpperCase() === newListName.value.toUpperCase()) {
                 alreadyList = true;
             }
         }
