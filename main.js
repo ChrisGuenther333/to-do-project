@@ -44,6 +44,14 @@ document.addEventListener('click', event => {
         addTask();
     }
 });
+//Global eventListener checking for enter key on dynamically created buttons
+document.addEventListener('keydown', event => {
+    if (event.key === 'Enter') {
+        if (event.target.classList.contains('enterTaskName')) {
+            addTask();
+        }
+    }
+});
 
 //Creates new list and calls display()
 function addList() {
