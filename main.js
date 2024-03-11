@@ -135,10 +135,25 @@ function display() {
     docCurrentList.innerHTML = currentListHTML;
 
     // Display items of current list
+    // let itemsHTML = ''
+    // itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
+    // currentList.items.forEach(item => {
+    //     itemsHTML += `<li class="list-group-item-action">${item.task}
+    //     <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
+    // });
+    // itemsHTML += '</ul>'
+    // docCurrentList.innerHTML += itemsHTML;
+
     let itemsHTML = ''
     itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
     currentList.items.forEach(item => {
-        itemsHTML += `<li class="list-group-item-action">${item.task}
+        itemsHTML += `<li class="list-group-item-action">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                ${item.task}
+            </label>
+        </div>
         <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
     });
     itemsHTML += '</ul>'
