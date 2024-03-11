@@ -7,7 +7,7 @@ let docCurrentList = document.querySelector('.currentList');
 const lists = []
 
 //Defaults to displaying first list
-let currentList = lists[0]
+let currentList;
 
 //Create list button
 newListBtn.addEventListener('click', addList);
@@ -19,8 +19,18 @@ newListName.addEventListener('keydown', event => {
 });
 //Global eventListener checking for dynamically created buttons
 document.addEventListener('click', event => {
+    //Checking if list was clicked
+    if (event.target.classList.contains(`list`)) {
+        for (let key in lists) {
+            if (lists[key].listName === event.target.innerText.trim()) {
+                currentList = lists[key];
+                display();
+            }
+        } 
+    }
+    
     //Checking if delete list button was clicked
-    if (event.target.classList.contains('dltListBtn')) {
+    else if (event.target.classList.contains('dltListBtn')) {
         for (let key in lists) {
             if (lists[key].listName === event.target.parentNode.innerText.trim()) {
                 lists.splice(lists[key], 1);
@@ -69,16 +79,18 @@ function display() {
     //Display list of lists
     let listsHTML = ''
     lists.forEach(list => {
-        listsHTML += `<li class="list-group-item-action ">${list.listName}
+        listsHTML += `<li class="list-group-item-action list">${list.listName}
         <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
     });
     listOfLists.innerHTML = listsHTML;
 
-    // //Display current list
-
-    docCurrentList.innerHTML = currentList.listName;
-    docCurrentList.innerHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
-    docCurrentList.innerHTML += `<button>Add Task</button>`;
+    // //Display current list name and Add Task button
+    let currentListHTML = ''
+    currentListHTML += currentList.listName;
+    currentListHTML += '<br>'
+    currentListHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
+    currentListHTML += `<button>Add Task</button>`;
+    docCurrentList.innerHTML = currentListHTML;
 
     // Display items of current list
     let itemsHTML = ''
