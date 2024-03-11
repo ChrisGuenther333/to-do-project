@@ -1,10 +1,13 @@
 <!-- JAVASCRIPT -->
-Be able to edit/check/uncheck items
+Edit items
+Search for specific items in list
+Clear completed items
+Save tasks for later viewing
 
 
 <!-- SCSS / Bootstrap -->
 Customize layout, button and inputs
-Make everything look pretty
+Make everything look pretty and intuitive
 
 
 <!-- NEXT TASK -->

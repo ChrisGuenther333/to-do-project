@@ -51,6 +51,17 @@ document.addEventListener('click', event => {
             }
         } 
     }
+
+    else if (event.target.classList.contains('clearComplete')) {
+        for (let key in currentList.items) {
+            let checked = document.getElementById('flexCheckChecked')
+            if (checked) {
+                console.log(currentList.items[key])
+                currentList.items.splice(key, 1);
+                display();
+            }
+        } 
+    }
 });
 //Global eventListener checking for enter key on dynamically created buttons
 document.addEventListener('keydown', event => {
@@ -135,15 +146,6 @@ function display() {
     docCurrentList.innerHTML = currentListHTML;
 
     // Display items of current list
-    // let itemsHTML = ''
-    // itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
-    // currentList.items.forEach(item => {
-    //     itemsHTML += `<li class="list-group-item-action">${item.task}
-    //     <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
-    // });
-    // itemsHTML += '</ul>'
-    // docCurrentList.innerHTML += itemsHTML;
-
     let itemsHTML = ''
     itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
     currentList.items.forEach(item => {
@@ -157,5 +159,6 @@ function display() {
         <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
     });
     itemsHTML += '</ul>'
+    itemsHTML += '<button class="clearComplete">Clear Completed</button>'
     docCurrentList.innerHTML += itemsHTML;
 }
