@@ -8,9 +8,9 @@ const lists = []
 
 let currentList;
 
-//Create list button
+//Button that creates new list
 newListBtn.addEventListener('click', addList);
-//Create list with enter key
+//Enter key creates new list
 newListName.addEventListener('keydown', event => {
     if (event.key === 'Enter') {
     addList();
@@ -29,8 +29,7 @@ document.addEventListener('click', event => {
             }
         } 
     }
-    
-    //Checking if delete list button was clicked
+    //Checking if button to delete list was clicked
     else if (event.target.classList.contains('dltListBtn')) {
         for (let key in lists) {
             const findID = document.getElementById(lists[key].listID);
@@ -40,11 +39,11 @@ document.addEventListener('click', event => {
             }
         } 
     }
-
+    //Checking if button to add task was clicked
     else if (event.target.classList.contains('enterTaskBtn')) {
         addTask();
     }
-
+    //Checking if button to delete task was clicked
     else if (event.target.classList.contains('dltTaskBtn')) {
         for (let key in currentList.items) {
             const findID = document.getElementById(currentList.items[key].taskID);
@@ -57,7 +56,7 @@ document.addEventListener('click', event => {
             }
         } 
     }
-
+    //Checking if button to edit task was clicked
     else if (event.target.classList.contains('editTaskBtn')) {
         for (let key in currentList.items) {
             const findID = document.getElementById(currentList.items[key].taskID);
@@ -70,6 +69,7 @@ document.addEventListener('click', event => {
 //Global eventListener checking for enter key on dynamically created buttons
 document.addEventListener('keydown', event => {
     if (event.key === 'Enter') {
+        //Enter key creates new task
         if (event.target.classList.contains('enterTaskName')) {
             addTask();
         }
@@ -96,7 +96,6 @@ function addList() {
 }
 
 //Creates new task and calls display()
-
 function addTask() {
     const newTaskName = document.querySelector('.enterTaskName');
     let newTaskID = Math.floor(Math.random() * 1000)
@@ -127,7 +126,6 @@ function display() {
         <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
     });
     listOfLists.innerHTML = listsHTML;
-
     // //Display current list name and Add Task button
     let currentListHTML = ''
     currentListHTML += currentList.listName;
@@ -135,7 +133,6 @@ function display() {
     currentListHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
     currentListHTML += `<button class="enterTaskBtn">Add Task</button>`;
     docCurrentList.innerHTML = currentListHTML;
-
     // Display items of current list
     let itemsHTML = ''
     itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
@@ -148,8 +145,4 @@ function display() {
     itemsHTML += '</ul>'
     itemsHTML += '<button class="clearComplete">Clear Completed</button>'
     docCurrentList.innerHTML += itemsHTML;
-}
-
-function generateID() {
-
 }
