@@ -11,6 +11,6 @@ Make everything look pretty and intuitive
 
 
 <!-- NEXT TASK -->
-
+Add clearComplete
 
 <!-- BUGS -->

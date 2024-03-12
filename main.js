@@ -22,7 +22,8 @@ document.addEventListener('click', event => {
     //Checking if list was clicked
     if (event.target.classList.contains(`list`)) {
         for (let key in lists) {
-            if (lists[key].listName === event.target.innerText.trim()) {
+            const findID = document.getElementById(lists[key].listID);
+            if (findID === event.target) {
                 currentList = lists[key];
                 display();
             }
@@ -32,7 +33,8 @@ document.addEventListener('click', event => {
     //Checking if delete list button was clicked
     else if (event.target.classList.contains('dltListBtn')) {
         for (let key in lists) {
-            if (lists[key].listName === event.target.parentNode.innerText.trim()) {
+            const findID = document.getElementById(lists[key].listID);
+            if (findID === event.target) {
                 lists.splice(key, 1);
                 display();
             }
@@ -45,20 +47,22 @@ document.addEventListener('click', event => {
 
     else if (event.target.classList.contains('dltTaskBtn')) {
         for (let key in currentList.items) {
-            if (currentList.items[key].task === event.target.parentNode.innerText.trim()) {
+            const findID = document.getElementById(currentList.items[key].taskID);
+            if (findID === event.target.parentNode) {
                 currentList.items.splice(key, 1);
                 display();
+            }
+            else {
+                console.log(false)
             }
         } 
     }
 
-    else if (event.target.classList.contains('clearComplete')) {
+    else if (event.target.classList.contains('editTaskBtn')) {
         for (let key in currentList.items) {
-            let checked = document.getElementById('flexCheckChecked')
-            if (checked) {
-                console.log(currentList.items[key])
-                currentList.items.splice(key, 1);
-                display();
+            const findID = document.getElementById(currentList.items[key].taskID);
+            if (findID === event.target.parentNode) {
+                console.log(`This will edit Task ID ${currentList.items[key].taskID}`);
             }
         } 
     }
@@ -74,21 +78,15 @@ document.addEventListener('keydown', event => {
 
 //Creates new list and calls display()
 function addList() {
-    let alreadyList = false;
+    let newListID = Math.floor(Math.random() * 1000)
     if (newListName.value !== '') {
         for (key in lists) {
-            if (lists[key].listName.toUpperCase() === newListName.value.toUpperCase()) {
-                alreadyList = true;
+            if (lists[key].listID === newListID) {
+                newListID = Math.floor(Math.random() * 1000);
             }
         }
-        if (alreadyList === false) {
-            lists.push({listName: newListName.value, items: []});
-            newListName.value = '';
-        }
-        else {
-            window.alert(`You've already created a list with that name`);
-            newListName.value = '';
-        }
+        lists.push({listID: newListID, listName: newListName.value, items: []});
+        newListName.value = '';
     }
     else {
         window.alert('Please enter a list name.');
@@ -101,22 +99,15 @@ function addList() {
 
 function addTask() {
     const newTaskName = document.querySelector('.enterTaskName');
+    let newTaskID = Math.floor(Math.random() * 1000)
     if (newTaskName.value !== '') {
-        let alreadyTask = false;
-
         for (key in currentList.items) {
-            if (currentList.items[key].task.toUpperCase() === newTaskName.value.toUpperCase()) {
-                alreadyTask = true;
+            if (currentList.items[key].taskID === newTaskID) {
+                newTaskID = Math.floor(Math.random() * 1000);
             }
         }
-        if (alreadyTask === false) {
-            currentList.items.push({task: newTaskName.value, complete: false});
-            newTaskName.value = '';
-        }
-        else {
-            window.alert(`You've already created that task`);
-            newTaskName.value = '';
-        }
+        currentList.items.push({taskID: newTaskID, task: newTaskName.value, complete: false});
+        newTaskName.value = '';
     }
     else {
         window.alert('Please enter a task.');
@@ -132,7 +123,7 @@ function display() {
     //Display list of lists
     let listsHTML = ''
     lists.forEach(list => {
-        listsHTML += `<li class="list-group-item-action list">${list.listName}
+        listsHTML += `<li class="list-group-item-action list" id="${list.listID}">${list.listName}
         <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
     });
     listOfLists.innerHTML = listsHTML;
@@ -149,16 +140,16 @@ function display() {
     let itemsHTML = ''
     itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
     currentList.items.forEach(item => {
-        itemsHTML += `<li class="list-group-item-action">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                ${item.task}
-            </label>
-        </div>
+        itemsHTML += `<li class="list-group-item-action" id="${item.taskID}">
+        ${item.task}
+        <button class="editTaskBtn">Edit</button>
         <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
     });
     itemsHTML += '</ul>'
     itemsHTML += '<button class="clearComplete">Clear Completed</button>'
     docCurrentList.innerHTML += itemsHTML;
+}
+
+function generateID() {
+
 }
