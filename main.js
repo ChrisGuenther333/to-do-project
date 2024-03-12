@@ -32,7 +32,11 @@ document.addEventListener('click', event => {
         for (let key in lists) {
             const findID = document.getElementById(lists[key].listID);
             if (findID === event.target.parentNode) {
-                lists.splice(key, 1);
+                const deletedList = lists.splice(key, 1);
+                if (currentList === deletedList[0]) {
+                    currentList = undefined
+                }
+                console.log(currentList)
                 display();
             }
         } 
@@ -122,23 +126,26 @@ function display() {
         <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
     });
     listOfLists.innerHTML = listsHTML;
-    // //Display current list name and Add Task button
+    //Setting up currentList and items
     let currentListHTML = ''
-    currentListHTML += currentList.listName;
-    currentListHTML += '<br>'
-    currentListHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
-    currentListHTML += `<button class="enterTaskBtn">Add Task</button>`;
-    docCurrentList.innerHTML = currentListHTML;
-    // Display items of current list
     let itemsHTML = ''
-    itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
-    currentList.items.forEach(item => {
-        itemsHTML += `<li class="list-group-item-action" id="${item.taskID}">
-        ${item.task}
-        <button class="editTaskBtn">Edit</button>
-        <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
-    });
-    itemsHTML += '</ul>'
-    itemsHTML += '<button class="clearComplete">Clear Completed</button>'
+    if (currentList != undefined) {
+        // //Display current list name and Add Task button
+        currentListHTML += currentList.listName;
+        currentListHTML += '<br>'
+        currentListHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
+        currentListHTML += `<button class="enterTaskBtn">Add Task</button>`;
+        // Display items of current list
+        itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
+        currentList.items.forEach(item => {
+            itemsHTML += `<li class="list-group-item-action" id="${item.taskID}">
+            ${item.task}
+            <button class="editTaskBtn">Edit</button>
+            <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
+        });
+        itemsHTML += '</ul>'
+        itemsHTML += '<button class="clearComplete">Clear Completed</button>'  
+    }
+    docCurrentList.innerHTML = currentListHTML;
     docCurrentList.innerHTML += itemsHTML;
 }
