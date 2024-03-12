@@ -1,6 +1,5 @@
 <!-- JAVASCRIPT -->
 Edit items
-Search for specific items in list
 Clear completed items
 Save tasks for later viewing
 

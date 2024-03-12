@@ -3,9 +3,11 @@ const newListName = document.querySelector('.enterListName');
 let newListBtn = document.querySelector('.createListBtn');
 let listOfLists = document.querySelector('.listOfLists');
 let docCurrentList = document.querySelector('.currentList');
+let docCurrentListItems = document.querySelector('.currentListItems');
 // array lists contains objects {listName: name, items: []}
-const lists = []
+const lists = [];
 let currentList;
+let searchedItems;
 
 //Button that creates new list
 newListBtn.addEventListener('click', addList);
@@ -23,7 +25,7 @@ document.addEventListener('click', event => {
             const findID = document.getElementById(lists[key].listID);
             if (findID === event.target) {
                 currentList = lists[key];
-                display();
+                displayLists();
             }
         } 
     }
@@ -36,8 +38,7 @@ document.addEventListener('click', event => {
                 if (currentList === deletedList[0]) {
                     currentList = undefined
                 }
-                console.log(currentList)
-                display();
+                displayLists();
             }
         } 
     }
@@ -51,7 +52,7 @@ document.addEventListener('click', event => {
             const findID = document.getElementById(currentList.items[key].taskID);
             if (findID === event.target.parentNode) {
                 currentList.items.splice(key, 1);
-                display();
+                displayLists();
             }
         } 
     }
@@ -80,17 +81,21 @@ document.addEventListener('input', event => {
     if (event.target.classList.contains('searchTaskField')) {
         //Compares search bar text to item list and adds matches to array
         const searchBar = document.querySelector('.searchTaskField')
-        let searchedTasks = []
-        for (let key in currentList.items) {
-            if(searchBar.value !== '') {
+        searchedItems = []
+        if(searchBar.value !== '') {
+            for (let key in currentList.items) {
                 if (currentList.items[key].task.toUpperCase().includes(searchBar.value.toUpperCase())) {
-                    searchedTasks.push(currentList.items[key]);
+                    searchedItems.push(currentList.items[key]);
                 }
             }
+            displayItemSearch();
         }
-        console.log(searchedTasks);
+        else {
+            displayListItems();
+        }
     }
 });
+
 
 //Creates new list and calls display()
 function addList() {
@@ -108,7 +113,7 @@ function addList() {
         window.alert('Please enter a list name.');
     }
 
-    display();
+    displayLists();
 }
 //Creates new task and calls display()
 function addTask() {
@@ -126,13 +131,13 @@ function addTask() {
     else {
         window.alert('Please enter a task.');
     }
-    display();
+    displayLists();
 }
 function markTaskComplete() {
 
 }
 //Renders list of lists, current list, its tasks, and buttons
-function display() {
+function displayLists() {
     //Display list of lists
     let listsHTML = ''
     lists.forEach(list => {
@@ -140,16 +145,23 @@ function display() {
         <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
     });
     listOfLists.innerHTML = listsHTML;
-    //Setting up currentList and items
+    //Setting up currentList
     let currentListHTML = ''
-    let itemsHTML = ''
     if (currentList != undefined) {
         // //Display current list name and Add Task button
         currentListHTML += currentList.listName;
         currentListHTML += '<br>'
         currentListHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
         currentListHTML += `<button class="enterTaskBtn">Add Task</button>`;
-        currentListHTML += `<input class="searchTaskField" type="text" placeholder="Search For A Task">`;
+        currentListHTML += `<input class="searchTaskField" type="text" placeholder="Search For A Task">`; 
+    }
+    docCurrentList.innerHTML = currentListHTML;
+    displayListItems();
+}
+function displayListItems() {
+    //Setting up currentList items
+    let itemsHTML = ''
+    if (currentList !== undefined) {
         // Display items of current list
         itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
         currentList.items.forEach(item => {
@@ -161,6 +173,23 @@ function display() {
         itemsHTML += '</ul>'
         itemsHTML += '<button class="clearComplete">Clear Completed</button>'  
     }
-    docCurrentList.innerHTML = currentListHTML;
-    docCurrentList.innerHTML += itemsHTML;
+    docCurrentListItems.innerHTML = itemsHTML;
+}
+function displayItemSearch() {
+    //Setting up currentList items
+    console.log(searchedItems)
+    let itemsHTML = ''
+    if (currentList !== undefined) {
+        // Display items of current list
+        itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
+        searchedItems.forEach(item => {
+            itemsHTML += `<li class="list-group-item-action" id="${item.taskID}">
+            ${item.task}
+            <button class="editTaskBtn">Edit</button>
+            <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
+        });
+        itemsHTML += '</ul>'
+        itemsHTML += '<button class="clearComplete">Clear Completed</button>'  
+    }
+    docCurrentListItems.innerHTML = itemsHTML;
 }
