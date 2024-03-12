@@ -4,7 +4,7 @@ let newListBtn = document.querySelector('.createListBtn');
 let listOfLists = document.querySelector('.listOfLists');
 let docCurrentList = document.querySelector('.currentList');
 let docCurrentListItems = document.querySelector('.currentListItems');
-// array lists contains objects {listName: name, items: []}
+//lists contains objects {listID: id, listName: name, items: []}
 const lists = [];
 let currentList;
 let searchedItems;
@@ -98,7 +98,7 @@ document.addEventListener('input', event => {
 });
 
 
-//Creates new list and calls display()
+//Creates new list and calls displayLists()
 function addList() {
     let newListID = Math.floor(Math.random() * 1000)
     if (newListName.value !== '') {
@@ -116,7 +116,7 @@ function addList() {
 
     displayLists();
 }
-//Creates new task and calls display()
+//Creates new task and calls displayLists()
 function addTask() {
     const newTaskName = document.querySelector('.enterTaskName');
     let newTaskID = Math.floor(Math.random() * 1000)
@@ -134,10 +134,7 @@ function addTask() {
     }
     displayLists();
 }
-function markTaskComplete() {
-
-}
-//Renders list of lists, current list, its tasks, and buttons
+//Renders list of lists, and current list
 function displayLists() {
     //Display list of lists
     let listsHTML = ''
@@ -159,6 +156,7 @@ function displayLists() {
     docCurrentList.innerHTML = currentListHTML;
     displayListItems();
 }
+//Renders current list's items
 function displayListItems() {
     //Setting up currentList items
     let itemsHTML = ''
@@ -176,6 +174,7 @@ function displayListItems() {
     }
     docCurrentListItems.innerHTML = itemsHTML;
 }
+//Renders searched items
 function displayItemSearch() {
     //Setting up currentList items
     console.log(searchedItems)
