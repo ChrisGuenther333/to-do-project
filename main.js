@@ -53,9 +53,6 @@ document.addEventListener('click', event => {
                 currentList.items.splice(key, 1);
                 display();
             }
-            else {
-                console.log(false)
-            }
         } 
     }
     //Checking if button to edit task was clicked
@@ -68,13 +65,30 @@ document.addEventListener('click', event => {
         } 
     }
 });
-//Global eventListener checking for enter key on dynamically created buttons
+//Global eventListener checking for keydown on dynamically created objects
 document.addEventListener('keydown', event => {
+    //Enter key creates new task
     if (event.key === 'Enter') {
-        //Enter key creates new task
         if (event.target.classList.contains('enterTaskName')) {
             addTask();
         }
+    }
+});
+//Global eventListener checking for input on dynamically created objects
+document.addEventListener('input', event => {
+    //Checking if text is being entered in task search bar
+    if (event.target.classList.contains('searchTaskField')) {
+        //Compares search bar text to item list and adds matches to array
+        const searchBar = document.querySelector('.searchTaskField')
+        let searchedTasks = []
+        for (let key in currentList.items) {
+            if(searchBar.value !== '') {
+                if (currentList.items[key].task.toUpperCase().includes(searchBar.value.toUpperCase())) {
+                    searchedTasks.push(currentList.items[key]);
+                }
+            }
+        }
+        console.log(searchedTasks);
     }
 });
 
@@ -135,6 +149,7 @@ function display() {
         currentListHTML += '<br>'
         currentListHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
         currentListHTML += `<button class="enterTaskBtn">Add Task</button>`;
+        currentListHTML += `<input class="searchTaskField" type="text" placeholder="Search For A Task">`;
         // Display items of current list
         itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
         currentList.items.forEach(item => {
