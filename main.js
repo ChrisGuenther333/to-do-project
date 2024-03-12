@@ -102,7 +102,7 @@ document.addEventListener('input', event => {
 function addList() {
     let newListID = Math.floor(Math.random() * 1000)
     if (newListName.value !== '') {
-        for (key in lists) {
+        for (let key in lists) {
             if (lists[key].listID === newListID) {
                 newListID = Math.floor(Math.random() * 1000);
             }
@@ -121,7 +121,7 @@ function addTask() {
     const newTaskName = document.querySelector('.enterTaskName');
     let newTaskID = Math.floor(Math.random() * 1000)
     if (newTaskName.value !== '') {
-        for (key in currentList.items) {
+        for (let key in currentList.items) {
             if (currentList.items[key].taskID === newTaskID) {
                 newTaskID = Math.floor(Math.random() * 1000);
             }

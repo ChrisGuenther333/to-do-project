@@ -1,5 +1,4 @@
 <!-- JAVASCRIPT -->
-Edit items
 Clear completed items
 Save tasks for later viewing
 
