@@ -1,11 +1,10 @@
+//Global-scope variables
 const newListName = document.querySelector('.enterListName');
 let newListBtn = document.querySelector('.createListBtn');
 let listOfLists = document.querySelector('.listOfLists');
 let docCurrentList = document.querySelector('.currentList');
-
 // array lists contains objects {listName: name, items: []}
 const lists = []
-
 let currentList;
 
 //Button that creates new list
@@ -16,7 +15,6 @@ newListName.addEventListener('keydown', event => {
     addList();
     }
 });
-
 //Global eventListener checking for clicks on dynamically created buttons
 document.addEventListener('click', event => {
     //Checking if list was clicked
@@ -33,7 +31,7 @@ document.addEventListener('click', event => {
     else if (event.target.classList.contains('dltListBtn')) {
         for (let key in lists) {
             const findID = document.getElementById(lists[key].listID);
-            if (findID === event.target) {
+            if (findID === event.target.parentNode) {
                 lists.splice(key, 1);
                 display();
             }
@@ -94,7 +92,6 @@ function addList() {
 
     display();
 }
-
 //Creates new task and calls display()
 function addTask() {
     const newTaskName = document.querySelector('.enterTaskName');
@@ -113,7 +110,6 @@ function addTask() {
     }
     display();
 }
-
 function markTaskComplete() {
 
 }
