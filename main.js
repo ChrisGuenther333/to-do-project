@@ -5,7 +5,7 @@ let listOfLists = document.querySelector('.listOfLists');
 let docCurrentList = document.querySelector('.currentList');
 let docCurrentListItems = document.querySelector('.currentListItems');
 //lists contains objects {listID: id, listName: name, items: []}
-const lists = [];
+let lists = [];
 let currentList;
 let searchedItems;
 let completedTasks = [];
@@ -97,7 +97,7 @@ document.addEventListener('click', event => {
                 }
             }
         }
-        for (let i=0; i < completedTasks.length-1; i++) {
+        for (let i=0; i < completedTasks.length; i++) {
             completedTasks.pop();
         }
         displayLists(); 
@@ -132,7 +132,6 @@ document.addEventListener('input', event => {
         }
     }
 });
-
 
 //Creates new list and calls displayLists()
 function addList() {
@@ -172,6 +171,7 @@ function addTask() {
 }
 //Renders list of lists, and current list
 function displayLists() {
+    save();
     //Display list of lists
     let listsHTML = ''
     lists.forEach(list => {
@@ -213,7 +213,6 @@ function displayListItems() {
 //Renders searched items
 function displayItemSearch() {
     //Setting up currentList items
-    console.log(searchedItems)
     let itemsHTML = ''
     if (currentList !== undefined) {
         // Display items of current list
@@ -229,3 +228,28 @@ function displayItemSearch() {
     }
     docCurrentListItems.innerHTML = itemsHTML;
 }
+//Save list of lists and current list
+function save() {
+    localStorage.setItem('lists', JSON.stringify(lists));
+    localStorage.setItem('currentList', JSON.stringify(currentList));
+    localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+}
+//Gets saved lists and current list and makes sure they
+function retrieve() {
+    const storedLists = localStorage.getItem('lists');
+    if(storedLists !== undefined && storedLists !== 'undefined' && storedLists !== undefined && storedLists !== 'null') {
+        lists = JSON.parse(storedLists)
+    }
+    const storedCurrentList = localStorage.getItem('currentList');
+    if(storedCurrentList !== undefined && storedCurrentList !== 'undefined' && storedCurrentList !== undefined && storedCurrentList !== 'null') {
+        currentList = JSON.parse(storedCurrentList);
+    }
+    const storedCompletedTasks = localStorage.getItem('completedTasks');
+    if(storedCompletedTasks !== undefined && storedCompletedTasks !== 'undefined' && storedCompletedTasks !== undefined && storedCompletedTasks !== 'null') {
+        completedTasks = JSON.parse(storedCompletedTasks);
+    }
+    displayLists();
+}
+
+//Checks to see if there is any stored lists/currentList when page initializes
+retrieve();

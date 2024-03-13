@@ -1,5 +1,4 @@
 <!-- JAVASCRIPT -->
-Save tasks for later viewing
 
 <!-- SCSS / Bootstrap -->
 Visually mark tasks when they are complete
