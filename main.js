@@ -84,7 +84,10 @@ document.addEventListener('click', event => {
         for (let key in currentList.items) {
             const findID = document.getElementById(currentList.items[key].taskID);
             if (findID === event.target.parentNode) {
-                currentList.items[key].task = window.prompt('Enter Task Name');
+                let updateTaskName = window.prompt('Enter Task Name');
+                if (updateTaskName !== '') {
+                    currentList.items[key].task = updateTaskName;
+                } 
                 displayLists();
             }
         } 
