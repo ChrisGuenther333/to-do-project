@@ -9,5 +9,6 @@ Make everything look pretty and intuitive
 
 <!-- OPTIONAL FEATURES -->
 Add animations
+Style entirely in Bootstrap
 
 <!-- BUGS -->

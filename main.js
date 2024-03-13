@@ -36,7 +36,8 @@ document.addEventListener('click', event => {
             const findID = document.getElementById(lists[key].listID);
             if (findID === event.target.parentNode) {
                 const deletedList = lists.splice(key, 1);
-                if (currentList === deletedList[0]) {
+                console.log(deletedList, currentList)
+                if (currentList.listID === deletedList[0].listID) {
                     currentList = undefined
                 }
                 displayLists();
