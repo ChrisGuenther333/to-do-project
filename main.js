@@ -8,6 +8,7 @@ let docCurrentListItems = document.querySelector('.currentListItems');
 const lists = [];
 let currentList;
 let searchedItems;
+let completedTasks = [];
 
 //Button that creates new list
 newListBtn.addEventListener('click', addList);
@@ -46,6 +47,27 @@ document.addEventListener('click', event => {
     else if (event.target.classList.contains('enterTaskBtn')) {
         addTask();
     }
+    //Checking if task was clicked
+    else if (event.target.classList.contains('item')) {
+        for (let curkey in currentList.items) {
+            const findID = document.getElementById(currentList.items[curkey].taskID);
+            if (findID === event.target) {
+                if (currentList.items[curkey].complete === false) {
+                    currentList.items[curkey].complete = true;
+                    completedTasks.push(currentList.items[curkey])
+                }
+                else {
+                    currentList.items[curkey].complete = false;
+                    for (let compkey in completedTasks) {
+                        if (completedTasks[compkey].taskID === currentList.items[curkey].taskID) {
+                            completedTasks.splice(compkey, 1);
+                        }
+                    }
+                }
+                displayLists();
+            }
+        }
+    }
     //Checking if button to delete task was clicked
     else if (event.target.classList.contains('dltTaskBtn')) {
         for (let key in currentList.items) {
@@ -65,6 +87,20 @@ document.addEventListener('click', event => {
                 displayLists();
             }
         } 
+    }
+    //Checking if Clear Completed button was clicked
+    else if (event.target.classList.contains('clearComplete')) {
+        for (let compkey in completedTasks) {
+            for (let curkey in currentList.items) {
+                if (completedTasks[compkey].taskID === currentList.items[curkey].taskID) {
+                    currentList.items.splice(curkey, 1);
+                }
+            }
+        }
+        for (let i=0; i < completedTasks.length-1; i++) {
+            completedTasks.pop();
+        }
+        displayLists(); 
     }
 });
 //Global eventListener checking for keydown on dynamically created objects
@@ -164,7 +200,7 @@ function displayListItems() {
         // Display items of current list
         itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
         currentList.items.forEach(item => {
-            itemsHTML += `<li class="list-group-item-action" id="${item.taskID}">
+            itemsHTML += `<li class="list-group-item-action item" id="${item.taskID}">
             ${item.task}
             <button class="editTaskBtn">Edit</button>
             <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
@@ -183,7 +219,7 @@ function displayItemSearch() {
         // Display items of current list
         itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
         searchedItems.forEach(item => {
-            itemsHTML += `<li class="list-group-item-action" id="${item.taskID}">
+            itemsHTML += `<li class="list-group-item-action item" id="${item.taskID}">
             ${item.task}
             <button class="editTaskBtn">Edit</button>
             <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
