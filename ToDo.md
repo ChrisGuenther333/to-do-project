@@ -7,4 +7,7 @@ Make everything look pretty and intuitive
 
 <!-- NEXT TASK -->
 
+<!-- OPTIONAL FEATURES -->
+Add animations
+
 <!-- BUGS -->
