@@ -181,11 +181,11 @@ function displayLists() {
         // //Display current list name and Add Task button
         currentListHTML += currentList.listName;
         currentListHTML += `<div class="d-flex">
-        <div class="form-floating mb-3 mt-3 d-flex">
+        <div class="form-floating w-25 my-3 me-5">
                                 <input type="text" class="form-control enterTaskName" id="enterTaskName" placeholder="Enter Task">
                                 <label for="enterTaskName">Enter Task</label>
                             </div>
-                            <div class="form-floating mb-3 mt-3 d-flex">
+                            <div class="form-floating w-25 my-3 ms-5">
                                 <input type="text" class="form-control searchTaskField" id="searchTaskField" placeholder="Search For A Task">
                                 <label for="searchTaskField">Search For A Task</label>
                             </div>
@@ -202,7 +202,7 @@ function displayListItems() {
         // Display items of current list
         itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
         currentList.items.forEach(item => {
-            itemsHTML += `<li class="list-group-item-action pt-2 pb-2 item" id="${item.taskID}">
+            itemsHTML += `<li class="list-group-item-action py-2 item" id="${item.taskID}">
             ${item.task}
             <button type="button" class="btn btn-light editTaskBtn">Edit</button>
             <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
@@ -221,7 +221,7 @@ function displayItemSearch() {
         // Display items of current list
         itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
         searchedItems.forEach(item => {
-            itemsHTML += `<li class="list-group-item-action pt-2 pb-2 item" id="${item.taskID}">
+            itemsHTML += `<li class="list-group-item-action py-2 item" id="${item.taskID}">
             ${item.task}
             <button type="button" class="btn btn-light editTaskBtn">Edit</button>
             <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;

@@ -10,12 +10,7 @@ body {
 }
 .lists {
     background-color: rgb(233, 233, 233);
-    min-height: 94vh;
 }
 .currList {
     background-color: white;
-    min-height: 94vh;
-}
-.enterListName {
-width: 100%;
 }
