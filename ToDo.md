@@ -10,6 +10,6 @@ Have Clear Completed button either invisible or greyed out when nothing complete
 
 <!-- OPTIONAL FEATURES -->
 Add animations
-Style entirely in Bootstrap
+Style entirely in Bootstrap/Convert all CSS to Bootstrap
 
 <!-- BUGS -->

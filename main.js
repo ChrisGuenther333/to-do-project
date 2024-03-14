@@ -77,7 +77,7 @@ document.addEventListener('click', event => {
             const findID = document.getElementById(currentList.items[key].taskID);
             if (findID === event.target.parentNode) {
                 let updateTaskName = window.prompt('Enter Task Name');
-                if (updateTaskName !== '') {
+                if (updateTaskName !== '' && updateTaskName !== null) {
                     currentList.items[key].task = updateTaskName;
                 } 
                 displayLists();
@@ -171,7 +171,7 @@ function displayLists() {
     //Display list of lists
     let listsHTML = ''
     lists.forEach(list => {
-        listsHTML += `<li class="list-group-item-action list" id="${list.listID}">${list.listName}
+        listsHTML += `<li class="list-group-item-action pt-2 pb-2 list" id="${list.listID}">${list.listName}
         <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
     });
     listOfLists.innerHTML = listsHTML;
@@ -202,9 +202,9 @@ function displayListItems() {
         // Display items of current list
         itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
         currentList.items.forEach(item => {
-            itemsHTML += `<li class="list-group-item-action item" id="${item.taskID}">
+            itemsHTML += `<li class="list-group-item-action pt-2 pb-2 item" id="${item.taskID}">
             ${item.task}
-            <button class="editTaskBtn">Edit</button>
+            <button type="button" class="btn btn-light editTaskBtn">Edit</button>
             <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
         });
         itemsHTML += '</ul>'
@@ -221,9 +221,9 @@ function displayItemSearch() {
         // Display items of current list
         itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
         searchedItems.forEach(item => {
-            itemsHTML += `<li class="list-group-item-action item" id="${item.taskID}">
+            itemsHTML += `<li class="list-group-item-action pt-2 pb-2 item" id="${item.taskID}">
             ${item.task}
-            <button class="editTaskBtn">Edit</button>
+            <button type="button" class="btn btn-light editTaskBtn">Edit</button>
             <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
         });
         itemsHTML += '</ul>'
