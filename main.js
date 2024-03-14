@@ -1,6 +1,5 @@
 //Global-scope variables
 const newListName = document.querySelector('.enterListName');
-let newListBtn = document.querySelector('.createListBtn');
 let listOfLists = document.querySelector('.listOfLists');
 let docCurrentList = document.querySelector('.currentList');
 let docCurrentListItems = document.querySelector('.currentListItems');
@@ -10,8 +9,6 @@ let currentList;
 let searchedItems;
 let completedTasks = [];
 
-//Button that creates new list
-newListBtn.addEventListener('click', addList);
 //Enter key creates new list
 newListName.addEventListener('keydown', event => {
     if (event.key === 'Enter') {
@@ -42,10 +39,6 @@ document.addEventListener('click', event => {
                 displayLists();
             }
         } 
-    }
-    //Checking if button to add task was clicked
-    else if (event.target.classList.contains('enterTaskBtn')) {
-        addTask();
     }
     //Checking if task was clicked
     else if (event.target.classList.contains('item')) {
@@ -189,7 +182,6 @@ function displayLists() {
         currentListHTML += currentList.listName;
         currentListHTML += '<br>'
         currentListHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
-        currentListHTML += `<button class="enterTaskBtn">Add Task</button>`;
         currentListHTML += `<input class="searchTaskField" type="text" placeholder="Search For A Task">`; 
     }
     docCurrentList.innerHTML = currentListHTML;

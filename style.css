@@ -1,18 +1,21 @@
 body {
-    background-color: black;
-}
-.outer {
-    margin: 30px 60px;
+    background-color: rgb(24, 24, 24);
+    font-size: 40px;
 }
 .navbar {
-    background-color: blue;
+    background-color: rgb(44, 44, 44);
     color: white;
+    font-size: 45px;
+
 }
 .lists {
-    background-color: gray;
-    min-height: 88vh;
+    background-color: rgb(233, 233, 233);
+    min-height: 91vh;
 }
 .currList {
-    background-color: rgb(199, 199, 199);
-    min-height: 88vh;
+    background-color: white;
+    min-height: 91vh;
+}
+.enterListName {
+width: 100%;
 }
