@@ -36,9 +36,8 @@ document.addEventListener('click', event => {
             const findID = document.getElementById(lists[key].listID);
             if (findID === event.target.parentNode) {
                 const deletedList = lists.splice(key, 1);
-                console.log(deletedList, currentList)
                 if (currentList.listID === deletedList[0].listID) {
-                    currentList = undefined
+                    currentList = ''
                 }
                 displayLists();
             }
@@ -185,7 +184,7 @@ function displayLists() {
     listOfLists.innerHTML = listsHTML;
     //Setting up currentList
     let currentListHTML = ''
-    if (currentList != undefined) {
+    if (currentList !== '') {
         // //Display current list name and Add Task button
         currentListHTML += currentList.listName;
         currentListHTML += '<br>'
@@ -200,7 +199,7 @@ function displayLists() {
 function displayListItems() {
     //Setting up currentList items
     let itemsHTML = ''
-    if (currentList !== undefined) {
+    if (currentList !== '') {
         // Display items of current list
         itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
         currentList.items.forEach(item => {
@@ -218,7 +217,7 @@ function displayListItems() {
 function displayItemSearch() {
     //Setting up currentList items
     let itemsHTML = ''
-    if (currentList !== undefined) {
+    if (currentList !== '') {
         // Display items of current list
         itemsHTML +=  '<ul class="list-group list-group-flush list-unstyled">'
         searchedItems.forEach(item => {
