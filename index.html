@@ -18,7 +18,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-4 lists">
-                    <input class="enterListName" type="text" placeholder="Enter List Name">
+                    <div class="form-floating mb-3 mt-3">
+                        <input type="text" class="form-control enterListName" id="floatingInput" placeholder="Enter List Name">
+                        <label for="floatingInput">Enter List Name</label>
+                      </div>
                     <!-- list of todo lists -->
                     <ul class="list-group list-unstyled listOfLists">
                     </ul>

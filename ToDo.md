@@ -4,6 +4,7 @@
 Visually mark tasks when they are complete
 Customize layout, button and inputs
 Make everything look pretty and intuitive
+Have Clear Completed button either invisible or greyed out when nothing complete
 
 <!-- NEXT TASK -->
 

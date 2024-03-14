@@ -180,9 +180,16 @@ function displayLists() {
     if (currentList !== '') {
         // //Display current list name and Add Task button
         currentListHTML += currentList.listName;
-        currentListHTML += '<br>'
-        currentListHTML += `<input class="enterTaskName" type="text" placeholder="Enter Task">`;
-        currentListHTML += `<input class="searchTaskField" type="text" placeholder="Search For A Task">`; 
+        currentListHTML += `<div class="d-flex">
+        <div class="form-floating mb-3 mt-3 d-flex">
+                                <input type="text" class="form-control enterTaskName" id="enterTaskName" placeholder="Enter Task">
+                                <label for="enterTaskName">Enter Task</label>
+                            </div>
+                            <div class="form-floating mb-3 mt-3 d-flex">
+                                <input type="text" class="form-control searchTaskField" id="searchTaskField" placeholder="Search For A Task">
+                                <label for="searchTaskField">Search For A Task</label>
+                            </div>
+                            </div>`
     }
     docCurrentList.innerHTML = currentListHTML;
     displayListItems();
@@ -201,7 +208,8 @@ function displayListItems() {
             <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
         });
         itemsHTML += '</ul>'
-        itemsHTML += '<button class="clearComplete">Clear Completed</button>'  
+        itemsHTML += '<button type="button" class="btn btn-dark clearComplete">Clear Completed</button>'  
+  
     }
     docCurrentListItems.innerHTML = itemsHTML;
 }
@@ -219,7 +227,7 @@ function displayItemSearch() {
             <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
         });
         itemsHTML += '</ul>'
-        itemsHTML += '<button class="clearComplete">Clear Completed</button>'  
+        itemsHTML += '<button type="button" class="btn btn-dark clearComplete">Clear Completed</button>'  
     }
     docCurrentListItems.innerHTML = itemsHTML;
 }

@@ -1,11 +1,11 @@
 body {
     background-color: rgb(24, 24, 24);
-    font-size: 40px;
+    /* font-size: 40px; */
 }
 .navbar {
     background-color: rgb(44, 44, 44);
     color: white;
-    font-size: 45px;
+    /* font-size: 45px; */
 
 }
 .lists {
