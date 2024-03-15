@@ -6,3 +6,5 @@ In this To-Do app you can:
 -Clear completed tasks in a list
 -Search for tasks in a list
 -Retrieve your lists when you reload the page
+
+This project consists of HTML, Bootstrap, and Javascript

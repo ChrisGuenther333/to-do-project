@@ -192,7 +192,7 @@ function displayLists() {
     //Display list of lists
     let listsHTML = "";
     lists.forEach((list) => {
-        listsHTML += `<li class="list-group-item list-group-item-action pt-2 pb-2 ${
+        listsHTML += `<li class="list-group-item list-group-item-action py-2 ${
             currentList.listID === list.listID ? "active" : ""
         } list" id="${list.listID}">${list.listName}
         <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
