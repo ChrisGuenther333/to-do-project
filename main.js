@@ -163,6 +163,7 @@ function addTask() {
     else {
         window.alert('Please enter a task.');
     }
+    
     displayLists();
 }
 //Renders list of lists, and current list
