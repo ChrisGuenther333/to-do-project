@@ -275,7 +275,7 @@ function retrieve() {
     if (
         storedLists !== undefined &&
         storedLists !== "undefined" &&
-        storedLists !== undefined &&
+        storedLists !== null &&
         storedLists !== "null"
     ) {
         lists = JSON.parse(storedLists);
@@ -284,7 +284,7 @@ function retrieve() {
     if (
         storedCurrentList !== undefined &&
         storedCurrentList !== "undefined" &&
-        storedCurrentList !== undefined &&
+        storedCurrentList !== null &&
         storedCurrentList !== "null"
     ) {
         currentList = JSON.parse(storedCurrentList);
@@ -293,7 +293,7 @@ function retrieve() {
     if (
         storedCompletedTasks !== undefined &&
         storedCompletedTasks !== "undefined" &&
-        storedCompletedTasks !== undefined &&
+        storedCompletedTasks !== null &&
         storedCompletedTasks !== "null"
     ) {
         completedTasks = JSON.parse(storedCompletedTasks);
