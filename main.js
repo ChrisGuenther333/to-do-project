@@ -5,7 +5,7 @@ let docCurrentList = document.querySelector(".currentList");
 let docCurrentListItems = document.querySelector(".currentListItems");
 //lists contains objects {listID: id, listName: name, items: []}
 let lists = [];
-let currentList;
+let currentList = '';
 let searchedItems;
 let completedTasks = [];
 
@@ -147,15 +147,17 @@ document.addEventListener("input", (event) => {
 function addList() {
     let newListID = Math.floor(Math.random() * 1000);
     if (newListName.value !== "") {
-        for (let key in lists) {
-            if (lists[key].listID === newListID) {
-                newListID = Math.floor(Math.random() * 1000);
+        if (lists.length > 0) {
+            for (let key in lists) {
+                if (lists[key].listID === newListID) {
+                    newListID = Math.floor(Math.random() * 1000);
+                }
             }
         }
         lists.push({
             listID: newListID,
             listName: newListName.value,
-            items: [],
+            items: []
         });
         newListName.value = "";
     } else {
@@ -191,12 +193,15 @@ function displayLists() {
     save();
     //Display list of lists
     let listsHTML = "";
-    lists.forEach((list) => {
-        listsHTML += `<li class="list-group-item list-group-item-action py-2 ${
-            currentList.listID === list.listID ? "active" : ""
-        } list" id="${list.listID}">${list.listName}
-        <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
-    });
+    if (lists.length > 0) {
+        lists.forEach(list => {
+            listsHTML += `<li class="list-group-item list-group-item-action py-2 ${
+                currentList.listID === list.listID ? "active" : ""
+            } list" id="${list.listID}">${list.listName}
+            <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
+        });
+    }
+
     listOfLists.innerHTML = listsHTML;
     //Setting up currentList
     let currentListHTML = "";
