@@ -47,7 +47,7 @@ document.addEventListener("click", (event) => {
             const findID = document.getElementById(
                 currentList.items[curkey].taskID
             );
-            if (findID.id === event.target.id) {
+            if (findID.id === event.target.parentNode.parentNode.id) {
                 if (currentList.items[curkey].complete === false) {
                     currentList.items[curkey].complete = true;
                     completedTasks.push(currentList.items[curkey]);
@@ -71,7 +71,7 @@ document.addEventListener("click", (event) => {
             const findID = document.getElementById(
                 currentList.items[key].taskID
             );
-            if (findID === event.target.parentNode) {
+            if (findID === event.target.parentNode.parentNode.parentNode) {
                 currentList.items.splice(key, 1);
             }
         }
@@ -82,7 +82,7 @@ document.addEventListener("click", (event) => {
             const findID = document.getElementById(
                 currentList.items[key].taskID
             );
-            if (findID === event.target.parentNode) {
+            if (findID === event.target.parentNode.parentNode.parentNode) {
                 let updateTaskName = window.prompt("Enter Task Name");
                 if (updateTaskName !== "" && updateTaskName !== null) {
                     currentList.items[key].task = updateTaskName;
@@ -98,7 +98,6 @@ document.addEventListener("click", (event) => {
                     completedTasks[compkey].taskID ===
                     currentList.items[curkey].taskID
                 ) {
-                    console.log(true)
                     currentList.items.splice(curkey, 1);
                 }
             }
@@ -231,12 +230,15 @@ function displayListItems() {
         // Display items of current list
         itemsHTML += '<ul class="list-group list-group-flush list-unstyled">';
         currentList.items.forEach((item) => {
-            itemsHTML += `<li class="list-group-item list-group-item-action py-2 item ${
-                item.complete ? "bg-success" : ""
+            itemsHTML += `<li class="list-group-item list-group-item-action text-start py-2 item ${
+                item.complete ? "text-success" : ""
             }" id="${item.taskID}">
-            ${item.task}
+            <div class="d-flex items-center">
+            <div class="w-50 me-5 item">${item.task}</div>
+            <div class="ms-5">
             <button type="button" class="btn btn-light editTaskBtn">Edit</button>
-            <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
+            <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button>
+            ${item.complete ? "<span>Completed</span>" : ""}</div></div></li>`;
         });
         itemsHTML += "</ul>";
         itemsHTML +=
