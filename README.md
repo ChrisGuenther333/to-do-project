@@ -1,5 +1,5 @@
 # To-Do Project
-  View live project demo [here](https://chrisguenther333.github.io/to-do-project/)
+  View live project demo [here](https://chrisguenther333.github.io/to-do-project/)  
 In this To-Do app you can:
 - Create lists by pressing Enter
 - Create tasks in each list by pressing Enter
