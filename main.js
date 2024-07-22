@@ -98,6 +98,7 @@ document.addEventListener("click", (event) => {
                     completedTasks[compkey].taskID ===
                     currentList.items[curkey].taskID
                 ) {
+                    console.log(true)
                     currentList.items.splice(curkey, 1);
                 }
             }
