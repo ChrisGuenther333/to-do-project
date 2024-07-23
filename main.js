@@ -238,9 +238,15 @@ function displayItemSearch() {
         itemsHTML += '<ul class="list-group list-group-flush list-unstyled">';
         searchedItems.forEach((item) => {
             itemsHTML += `
-            <li class="list-group-item list-group-item-action py-2 item" id="${item.taskID}">${item.task}
-                <button type="button" class="btn btn-light editTaskBtn">Edit</button>
-                <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button>
+            <li class="list-group-item list-group-item-action text-start py-2 item ${item.complete ? "text-success" : ""}" id="${item.taskID}">
+                <div class="d-flex align-items-center item">
+                    <div class="w-50 me-5 item">${item.task}</div>
+                    <div class="px-5 d-flex align-items-center item">
+                        <button type="button" class="btn btn-light me-5 editTaskBtn">Edit</button>
+                        <button type="button" class="btn-close me-5 dltTaskBtn" aria-label="Close"></button>
+                        ${item.complete ? `<span class="border border-success rounded-pill px-2">Completed</span>` : ""}
+                    </div>
+                </div>
             </li>`;
         });
         itemsHTML += "</ul>";
