@@ -31,18 +31,25 @@ document.addEventListener("click", (event) => {
         for (let key in lists) {
             const findID = document.getElementById(lists[key].listID);
             if (findID === event.target.parentNode) {
+                // Removes completed tasks from array before deleting list
+                const findTask = completedTasks.filter(task =>
+                    task.id === key.id)
+                completedTasks.splice(findTask, 1);
+
                 const deletedList = lists.splice(key, 1);
                 if (currentList.listID === deletedList[0].listID) {
                     currentList = "";
                 }
             }
+            console.log(`List deleted:`, completedTasks)
+
         }
     }
     //Checking if task was clicked
     else if (event.target.classList.contains("item")) {
         for (let curkey in currentList.items) {
             const findID = document.getElementById(currentList.items[curkey].taskID);
-            if (findID.id === event.target.parentNode.parentNode.id || findID.id === event.target.parentNode.id || findID.id === event.target.id) {
+            if (findID && (findID.id === event.target.id || findID.id === event.target.parentNode.id || findID.id === event.target.parentNode.parentNode.id || findID.id === event.target.parentNode.parentNode.parentNode.id)) {
                 if (currentList.items[curkey].complete === false) {
                     currentList.items[curkey].complete = true;
                     completedTasks.push(currentList.items[curkey]);
@@ -56,15 +63,22 @@ document.addEventListener("click", (event) => {
                 }
             }
         }
+        console.log(`Task clicked:`, completedTasks)
     }
     //Checking if button to delete task was clicked
     else if (event.target.classList.contains("dltTaskBtn")) {
         for (let key in currentList.items) {
+            // Removes completed tasks from array before deleting task
             const findID = document.getElementById(currentList.items[key].taskID);
+            const findTask = completedTasks.filter(task =>
+                task.id === findID.id)
+            completedTasks.splice(findTask, 1);
             if (findID === event.target.parentNode.parentNode.parentNode) {
                 currentList.items.splice(key, 1);
             }
         }
+        console.log(`Task deleted:`, completedTasks)
+
     }
     //Checking if button to edit task was clicked
     else if (event.target.classList.contains("editTaskBtn")) {
@@ -80,6 +94,8 @@ document.addEventListener("click", (event) => {
     }
     //Checking if Clear Completed button was clicked
     else if (event.target.classList.contains("clearComplete")) {
+        console.log(`Completed tasks before clear:`, completedTasks)
+        console.log(`Current list tasks before clear:`, currentList.items)
         for (let compkey in completedTasks) {
             for (let curkey in currentList.items) {
                 if (completedTasks[compkey].taskID === currentList.items[curkey].taskID) {
@@ -88,7 +104,11 @@ document.addEventListener("click", (event) => {
                 }
             }
         }
-    } else {
+        console.log(`Completed tasks after clear:`, completedTasks)
+        console.log(`Current list tasks before clear:`, currentList.items)
+
+    }
+    else {
         return;
     }
     displayLists();
@@ -169,7 +189,7 @@ function addTask() {
 }
 //Renders list of lists, and current list
 function displayLists() {
-    save();
+    // save();
     //Display list of lists
     let listsHTML = "";
     if (lists.length > 0) {
@@ -238,9 +258,15 @@ function displayItemSearch() {
         itemsHTML += '<ul class="list-group list-group-flush list-unstyled">';
         searchedItems.forEach((item) => {
             itemsHTML += `
-            <li class="list-group-item list-group-item-action py-2 item" id="${item.taskID}">${item.task}
-                <button type="button" class="btn btn-light editTaskBtn">Edit</button>
-                <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button>
+            <li class="list-group-item list-group-item-action text-start py-2 item ${item.complete ? "text-success" : ""}" id="${item.taskID}">
+                <div class="d-flex align-items-center item">
+                    <div class="w-50 me-5 item">${item.task}</div>
+                    <div class="px-5 d-flex align-items-center item">
+                        <button type="button" class="btn btn-light me-5 editTaskBtn">Edit</button>
+                        <button type="button" class="btn-close me-5 dltTaskBtn" aria-label="Close"></button>
+                        ${item.complete ? `<span class="border border-success rounded-pill px-2">Completed</span>` : ""}
+                    </div>
+                </div>
             </li>`;
         });
         itemsHTML += "</ul>";
@@ -254,7 +280,7 @@ function save() {
     localStorage.setItem("currentList", JSON.stringify(currentList));
     localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
 }
-//Gets saved lists and current list and makes sure they
+//Gets saved lists and current list and makes sure they are not undefined/null
 function retrieve() {
     const storedLists = localStorage.getItem("lists");
     if (
@@ -287,4 +313,4 @@ function retrieve() {
 }
 
 //Checks to see if there is any stored lists/currentList when page initializes
-retrieve();
+// retrieve();
