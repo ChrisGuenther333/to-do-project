@@ -17,7 +17,6 @@ newListName.addEventListener("keydown", (event) => {
 });
 //Global eventListener checking for clicks on dynamically created buttons
 document.addEventListener("click", (event) => {
-    // console.log(event.target)
     //Checking if list was clicked
     if (event.target.classList.contains(`list`)) {
         for (let key in lists) {
@@ -57,7 +56,6 @@ document.addEventListener("click", (event) => {
                 }
             }
         }
-        // console.log(completedTasks)
     }
     //Checking if button to delete task was clicked
     else if (event.target.classList.contains("dltTaskBtn")) {
@@ -67,7 +65,6 @@ document.addEventListener("click", (event) => {
                 currentList.items.splice(key, 1);
             }
         }
-        // console.log(completedTasks)
     }
     //Checking if button to edit task was clicked
     else if (event.target.classList.contains("editTaskBtn")) {
@@ -80,22 +77,17 @@ document.addEventListener("click", (event) => {
                 }
             }
         }
-        // console.log(completedTasks)
     }
     //Checking if Clear Completed button was clicked
     else if (event.target.classList.contains("clearComplete")) {
-        // console.log(completedTasks)
         for (let compkey in completedTasks) {
             for (let curkey in currentList.items) {
                 if (completedTasks[compkey].taskID === currentList.items[curkey].taskID) {
                     currentList.items.splice(curkey, 1);
+                    completedTasks.splice(compkey, 1);
                 }
             }
         }
-        for (let i = 0; i < completedTasks.length; i++) {
-            completedTasks.pop();
-        }
-        // console.log(completedTasks)
     } else {
         return;
     }
@@ -261,7 +253,6 @@ function save() {
     localStorage.setItem("lists", JSON.stringify(lists));
     localStorage.setItem("currentList", JSON.stringify(currentList));
     localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
-    // console.log(completedTasks)
 }
 //Gets saved lists and current list and makes sure they
 function retrieve() {
@@ -292,9 +283,7 @@ function retrieve() {
     ) {
         completedTasks = JSON.parse(storedCompletedTasks);
     }
-    // console.log(completedTasks)
     displayLists();
-    // console.log(completedTasks)
 }
 
 //Checks to see if there is any stored lists/currentList when page initializes
