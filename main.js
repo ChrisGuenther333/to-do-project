@@ -178,8 +178,8 @@ function displayLists() {
     if (lists.length > 0) {
         lists.forEach(list => {
             listsHTML += `
-            <li class="list-group-item list-group-item-action py-2 ${currentList.listID === list.listID ? "active" : ""} list" id="${list.listID}">${list.listName}
-                <button type="button" class="btn-close dltListBtn" aria-label="Close"></button>
+            <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 ${currentList.listID === list.listID ? "active" : ""} list" id="${list.listID}">${list.listName}
+                <button type="button" class="btn-close me-3 dltListBtn" aria-label="Close"></button>
             </li>`;
         });
     }
@@ -217,9 +217,9 @@ function displayListItems() {
             <li class="list-group-item list-group-item-action text-start py-2 item ${item.complete ? "text-success" : ""}" id="${item.taskID}">
                 <div class="d-flex align-items-center item">
                     <div class="w-50 me-5 item">${item.task}</div>
-                    <div class=" px-5 d-flex justify-content-between align-items-center item">
-                        <button type="button" class="btn btn-light editTaskBtn">Edit</button>
-                        <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button>
+                    <div class="px-5 d-flex align-items-center item">
+                        <button type="button" class="btn btn-light me-5 editTaskBtn">Edit</button>
+                        <button type="button" class="btn-close me-5 dltTaskBtn" aria-label="Close"></button>
                         ${item.complete ? `<span class="border border-success rounded-pill px-2">Completed</span>` : ""}
                     </div>
                 </div>
