@@ -31,18 +31,25 @@ document.addEventListener("click", (event) => {
         for (let key in lists) {
             const findID = document.getElementById(lists[key].listID);
             if (findID === event.target.parentNode) {
+                //Removes completed tasks from array before deleting list
+                // const findTask = completedTasks.filter(task =>
+                //     task.id === key.id)
+                // completedTasks.splice(findTask, 1);
+
                 const deletedList = lists.splice(key, 1);
                 if (currentList.listID === deletedList[0].listID) {
                     currentList = "";
                 }
             }
+
         }
+        // console.log(completedTasks)
     }
     //Checking if task was clicked
     else if (event.target.classList.contains("item")) {
         for (let curkey in currentList.items) {
             const findID = document.getElementById(currentList.items[curkey].taskID);
-            if (findID.id === event.target.parentNode.parentNode.id || findID.id === event.target.parentNode.id || findID.id === event.target.id) {
+            if (findID && (findID.id === event.target.id || findID.id === event.target.parentNode.id || findID.id === event.target.parentNode.parentNode.id || findID.id === event.target.parentNode.parentNode.parentNode.id)) {
                 if (currentList.items[curkey].complete === false) {
                     currentList.items[curkey].complete = true;
                     completedTasks.push(currentList.items[curkey]);
@@ -56,15 +63,22 @@ document.addEventListener("click", (event) => {
                 }
             }
         }
+        // console.log(completedTasks)
     }
     //Checking if button to delete task was clicked
     else if (event.target.classList.contains("dltTaskBtn")) {
         for (let key in currentList.items) {
+            //Removes completed tasks from array before deleting task
+            // const findTask = completedTasks.filter(task =>
+            //     task.id === key.id)
+            // completedTasks.splice(findTask, 1);
+
             const findID = document.getElementById(currentList.items[key].taskID);
             if (findID === event.target.parentNode.parentNode.parentNode) {
                 currentList.items.splice(key, 1);
             }
         }
+        console.log(completedTasks)
     }
     //Checking if button to edit task was clicked
     else if (event.target.classList.contains("editTaskBtn")) {
@@ -88,7 +102,8 @@ document.addEventListener("click", (event) => {
                 }
             }
         }
-    } else {
+    }
+    else {
         return;
     }
     displayLists();
