@@ -31,19 +31,19 @@ document.addEventListener("click", (event) => {
         for (let key in lists) {
             const findID = document.getElementById(lists[key].listID);
             if (findID === event.target.parentNode) {
-                //Removes completed tasks from array before deleting list
-                // const findTask = completedTasks.filter(task =>
-                //     task.id === key.id)
-                // completedTasks.splice(findTask, 1);
+                // Removes completed tasks from array before deleting list
+                const findTask = completedTasks.filter(task =>
+                    task.id === key.id)
+                completedTasks.splice(findTask, 1);
 
                 const deletedList = lists.splice(key, 1);
                 if (currentList.listID === deletedList[0].listID) {
                     currentList = "";
                 }
             }
+            console.log(`List deleted:`, completedTasks)
 
         }
-        // console.log(completedTasks)
     }
     //Checking if task was clicked
     else if (event.target.classList.contains("item")) {
@@ -63,22 +63,22 @@ document.addEventListener("click", (event) => {
                 }
             }
         }
-        // console.log(completedTasks)
+        console.log(`Task clicked:`, completedTasks)
     }
     //Checking if button to delete task was clicked
     else if (event.target.classList.contains("dltTaskBtn")) {
         for (let key in currentList.items) {
-            //Removes completed tasks from array before deleting task
-            // const findTask = completedTasks.filter(task =>
-            //     task.id === key.id)
-            // completedTasks.splice(findTask, 1);
-
+            // Removes completed tasks from array before deleting task
             const findID = document.getElementById(currentList.items[key].taskID);
+            const findTask = completedTasks.filter(task =>
+                task.id === findID.id)
+            completedTasks.splice(findTask, 1);
             if (findID === event.target.parentNode.parentNode.parentNode) {
                 currentList.items.splice(key, 1);
             }
         }
-        console.log(completedTasks)
+        console.log(`Task deleted:`, completedTasks)
+
     }
     //Checking if button to edit task was clicked
     else if (event.target.classList.contains("editTaskBtn")) {
@@ -94,6 +94,8 @@ document.addEventListener("click", (event) => {
     }
     //Checking if Clear Completed button was clicked
     else if (event.target.classList.contains("clearComplete")) {
+        console.log(`Completed tasks before clear:`, completedTasks)
+        console.log(`Current list tasks before clear:`, currentList.items)
         for (let compkey in completedTasks) {
             for (let curkey in currentList.items) {
                 if (completedTasks[compkey].taskID === currentList.items[curkey].taskID) {
@@ -102,6 +104,9 @@ document.addEventListener("click", (event) => {
                 }
             }
         }
+        console.log(`Completed tasks after clear:`, completedTasks)
+        console.log(`Current list tasks before clear:`, currentList.items)
+
     }
     else {
         return;
@@ -184,7 +189,7 @@ function addTask() {
 }
 //Renders list of lists, and current list
 function displayLists() {
-    save();
+    // save();
     //Display list of lists
     let listsHTML = "";
     if (lists.length > 0) {
@@ -275,7 +280,7 @@ function save() {
     localStorage.setItem("currentList", JSON.stringify(currentList));
     localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
 }
-//Gets saved lists and current list and makes sure they
+//Gets saved lists and current list and makes sure they are not undefined/null
 function retrieve() {
     const storedLists = localStorage.getItem("lists");
     if (
@@ -308,4 +313,4 @@ function retrieve() {
 }
 
 //Checks to see if there is any stored lists/currentList when page initializes
-retrieve();
+// retrieve();
