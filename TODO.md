@@ -1,4 +1,8 @@
 # To Do
-- [ ] Bug: Pressing completed tasks when none are marked as completed in current list will remove all completed tasks from completedTasks array
-- [ ] Searching for tasks shows if they are completed or not
-- [ ] Add text to listList and taskList encouraging people to add list/task by pressing enter if they are empty
+- [ ] Sometimes clearing completedTasks does not clear all, might be an issue with completedTasks array and currentList.items array
+  - Sometimes when console logging completedTasks and currentList.items it will claim it has multiple items in array but will only display one of them
+- [ ] Re-enable save() and retrieve() functions
+## Potential Future Features
+- Search List
+- Add text to listList and taskList encouraging people to add list/task by pressing enter if they are empty
+- Clean up completedTasks so it removes any tasks that were marked when a list or task is deleted
