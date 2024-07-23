@@ -17,6 +17,7 @@ newListName.addEventListener("keydown", (event) => {
 });
 //Global eventListener checking for clicks on dynamically created buttons
 document.addEventListener("click", (event) => {
+    console.log(event.target)
     //Checking if list was clicked
     if (event.target.classList.contains(`list`)) {
         for (let key in lists) {
@@ -39,25 +40,17 @@ document.addEventListener("click", (event) => {
         }
     }
     //Checking if task was clicked
-    else if (
-        event.target.classList.contains("item") ||
-        event.target.classList.contains("task-span")
-    ) {
+    else if (event.target.classList.contains("item")) {
         for (let curkey in currentList.items) {
-            const findID = document.getElementById(
-                currentList.items[curkey].taskID
-            );
-            if (findID.id === event.target.parentNode.parentNode.id) {
+            const findID = document.getElementById(currentList.items[curkey].taskID);
+            if (findID.id === event.target.parentNode.parentNode.id || findID.id === event.target.parentNode.id || findID.id === event.target.id) {
                 if (currentList.items[curkey].complete === false) {
                     currentList.items[curkey].complete = true;
                     completedTasks.push(currentList.items[curkey]);
                 } else {
                     currentList.items[curkey].complete = false;
                     for (let compkey in completedTasks) {
-                        if (
-                            completedTasks[compkey].taskID ===
-                            currentList.items[curkey].taskID
-                        ) {
+                        if (completedTasks[compkey].taskID === currentList.items[curkey].taskID) {
                             completedTasks.splice(compkey, 1);
                         }
                     }
@@ -68,9 +61,7 @@ document.addEventListener("click", (event) => {
     //Checking if button to delete task was clicked
     else if (event.target.classList.contains("dltTaskBtn")) {
         for (let key in currentList.items) {
-            const findID = document.getElementById(
-                currentList.items[key].taskID
-            );
+            const findID = document.getElementById(currentList.items[key].taskID);
             if (findID === event.target.parentNode.parentNode.parentNode) {
                 currentList.items.splice(key, 1);
             }
@@ -79,9 +70,7 @@ document.addEventListener("click", (event) => {
     //Checking if button to edit task was clicked
     else if (event.target.classList.contains("editTaskBtn")) {
         for (let key in currentList.items) {
-            const findID = document.getElementById(
-                currentList.items[key].taskID
-            );
+            const findID = document.getElementById(currentList.items[key].taskID);
             if (findID === event.target.parentNode.parentNode.parentNode) {
                 let updateTaskName = window.prompt("Enter Task Name");
                 if (updateTaskName !== "" && updateTaskName !== null) {
@@ -94,10 +83,7 @@ document.addEventListener("click", (event) => {
     else if (event.target.classList.contains("clearComplete")) {
         for (let compkey in completedTasks) {
             for (let curkey in currentList.items) {
-                if (
-                    completedTasks[compkey].taskID ===
-                    currentList.items[curkey].taskID
-                ) {
+                if (completedTasks[compkey].taskID === currentList.items[curkey].taskID) {
                     currentList.items.splice(curkey, 1);
                 }
             }
@@ -128,11 +114,7 @@ document.addEventListener("input", (event) => {
         searchedItems = [];
         if (searchBar.value !== "") {
             for (let key in currentList.items) {
-                if (
-                    currentList.items[key].task
-                        .toUpperCase()
-                        .includes(searchBar.value.toUpperCase())
-                ) {
+                if (currentList.items[key].task.toUpperCase().includes(searchBar.value.toUpperCase())) {
                     searchedItems.push(currentList.items[key]);
                 }
             }
@@ -195,10 +177,10 @@ function displayLists() {
     let listsHTML = "";
     if (lists.length > 0) {
         lists.forEach(list => {
-            listsHTML += `<li class="list-group-item list-group-item-action py-2 ${
-                currentList.listID === list.listID ? "active" : ""
-            } list" id="${list.listID}">${list.listName}
-            <button type="button" class="btn-close dltListBtn" aria-label="Close"></button></li>`;
+            listsHTML += `
+            <li class="list-group-item list-group-item-action py-2 ${currentList.listID === list.listID ? "active" : ""} list" id="${list.listID}">${list.listName}
+                <button type="button" class="btn-close dltListBtn" aria-label="Close"></button>
+            </li>`;
         });
     }
 
@@ -208,15 +190,16 @@ function displayLists() {
     if (currentList !== "") {
         // //Display current list name and Add Task button
         currentListHTML += `<span class="fs-1"></>${currentList.listName}</span>`;
-        currentListHTML += `<div class="d-flex">
-        <div class="form-floating w-25 my-3 me-5">
-            <input type="text" class="form-control enterTaskName" id="enterTaskName" placeholder="Enter Task">
-            <label for="enterTaskName">Enter Task</label>
-        </div>
-        <div class="form-floating w-25 my-3 ms-5">
-            <input type="text" class="form-control searchTaskField" id="searchTaskField" placeholder="Search For A Task">
-            <label for="searchTaskField">Search For A Task</label>
-        </div>
+        currentListHTML += `
+        <div class="d-flex">
+            <div class="form-floating w-25 my-3 me-5">
+                <input type="text" class="form-control enterTaskName" id="enterTaskName" placeholder="Enter Task">
+                <label for="enterTaskName">Enter Task</label>
+            </div>
+            <div class="form-floating w-25 my-3 ms-5">
+                <input type="text" class="form-control searchTaskField" id="searchTaskField" placeholder="Search For A Task">
+                <label for="searchTaskField">Search For A Task</label>
+            </div>
         </div>`;
     }
     docCurrentList.innerHTML = currentListHTML;
@@ -230,15 +213,17 @@ function displayListItems() {
         // Display items of current list
         itemsHTML += '<ul class="list-group list-group-flush list-unstyled">';
         currentList.items.forEach((item) => {
-            itemsHTML += `<li class="list-group-item list-group-item-action text-start py-2 item ${
-                item.complete ? "text-success" : ""
-            }" id="${item.taskID}">
-            <div class="d-flex items-center">
-            <div class="w-50 me-5 item">${item.task}</div>
-            <div class="ms-5">
-            <button type="button" class="btn btn-light editTaskBtn">Edit</button>
-            <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button>
-            ${item.complete ? "<span>Completed</span>" : ""}</div></div></li>`;
+            itemsHTML += `
+            <li class="list-group-item list-group-item-action text-start py-2 item ${item.complete ? "text-success" : ""}" id="${item.taskID}">
+                <div class="d-flex align-items-center item">
+                    <div class="w-50 me-5 item">${item.task}</div>
+                    <div class=" px-5 d-flex justify-content-between align-items-center item">
+                        <button type="button" class="btn btn-light editTaskBtn">Edit</button>
+                        <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button>
+                        ${item.complete ? `<span class="border border-success rounded-pill px-2">Completed</span>` : ""}
+                    </div>
+                </div>
+            </li>`;
         });
         itemsHTML += "</ul>";
         itemsHTML +=
@@ -255,14 +240,14 @@ function displayItemSearch() {
         // Display items of current list
         itemsHTML += '<ul class="list-group list-group-flush list-unstyled">';
         searchedItems.forEach((item) => {
-            itemsHTML += `<li class="list-group-item list-group-item-action py-2 item" id="${item.taskID}">
-                            ${item.task}
-                            <button type="button" class="btn btn-light editTaskBtn">Edit</button>
-                            <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button></li>`;
+            itemsHTML += `
+            <li class="list-group-item list-group-item-action py-2 item" id="${item.taskID}">${item.task}
+                <button type="button" class="btn btn-light editTaskBtn">Edit</button>
+                <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button>
+            </li>`;
         });
         itemsHTML += "</ul>";
-        itemsHTML +=
-            '<button type="button" class="btn btn-dark mt-2 clearComplete">Clear Completed</button>';
+        itemsHTML +='<button type="button" class="btn btn-dark mt-2 clearComplete">Clear Completed</button>';
     }
     docCurrentListItems.innerHTML = itemsHTML;
 }
