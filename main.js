@@ -185,7 +185,7 @@ function displayLists() {
     save();
     // Display list of lists
     let listsHTML = "";
-    if (lists.length > 0) {
+    if (lists !== null && lists.length > 0) {
         lists.forEach(list => {
             listsHTML += `
             <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 ${currentList.listID === list.listID ? "active" : ""} list" id="${list.listID}">${list.listName}
