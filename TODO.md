@@ -1,4 +1,5 @@
 # To Do
+<!-- ON LINE 75: CHECKING IF EDIT TASK BUTTON WAS CLICKED  -->
 - [ ] Go through every function and fix it one by one
   - [ ] Delete list button clicked: Line 36 prints empty completedTasks array
 - [ ] Convert every for in loop to a forEach or whatever is most applicable
