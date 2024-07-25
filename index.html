@@ -17,10 +17,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-4 min-vh-100 overflow-y-auto bg-secondary-subtle lists">
-                    <div class="form-floating d-flex my-3">
-                        <input type="text" class="form-control enterListName" id="floatingInput" placeholder="Enter List Name">
-                        <label for="floatingInput">Enter List Name</label>
-                        <button type="button" class="btn btn-dark ms-2 addListBtn">Add List</button>
+                    <div class="d-flex align-items-center">
+                        <div class="form-floating my-3 flex-grow-1">
+                            <input type="text" class="form-control enterListName" id="floatingInput" placeholder="Enter List Name">
+                            <label for="floatingInput">Enter List Name</label>
+                        </div>
+                        <button type="button" class="btn btn-dark ms-2 py-3 addListBtn">Add List</button>
                     </div>
                     <!-- list of todo lists -->
                     <ul class="list-group list-unstyled listOfLists overflow-auto"></ul>
