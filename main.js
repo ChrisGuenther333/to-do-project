@@ -22,7 +22,6 @@ addListBtn.addEventListener("click", () => addList())
 
 // Global eventListener checking for clicks on dynamically created buttons
 document.addEventListener("click", (event) => {
-    console.log(event.target)
     // Checking if list was clicked
     if (event.target.classList.contains(`list`)) {
         console.log
@@ -141,7 +140,7 @@ document.addEventListener("input", (event) => {
 function addList() {
     let newListID = Math.floor(Math.random() * 1000);
     if (newListName.value !== "") {
-        if (lists.length > 0) {
+        if (lists !== null && lists.length > 0) {
             lists.forEach(list => {
                 if (list.listID === newListID) {
                     newListID = Math.floor(Math.random() * 1000);
@@ -183,7 +182,6 @@ function addTask() {
 }
 // Renders list of lists, and current list
 function displayLists() {
-    console.log(currentList)
     save();
     // Display list of lists
     let listsHTML = "";
