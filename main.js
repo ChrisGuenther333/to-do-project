@@ -43,7 +43,6 @@ document.addEventListener("click", (event) => {
             const findID = document.getElementById(list.listID);
 
             if (findID.id === event.target.parentNode.id) {
-
                 // Removes completed tasks from array before deleting list
                 completedTasks = completedTasks.filter(task => !list.items.includes(task))
                 const deletedList = lists.filter(aList => aList.listID == findID.id);
@@ -165,11 +164,12 @@ function addTask() {
     const newTaskName = document.querySelector(".enterTaskName");
     let newTaskID = Math.floor(Math.random() * 1000);
     if (newTaskName.value !== "") {
-        for (let key in currentList.items) {
-            if (currentList.items[key].taskID === newTaskID) {
+        currentList.items.forEach(item => {
+            if (item.taskID === newTaskID) {
                 newTaskID = Math.floor(Math.random() * 1000);
             }
-        }
+        })
+        
         currentList.items.push({
             taskID: newTaskID,
             task: newTaskName.value,
