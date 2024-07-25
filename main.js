@@ -1,32 +1,43 @@
-//Global-scope variables
+// Global-scope variables
 const newListName = document.querySelector(".enterListName");
+const addListBtn = document.querySelector(".addListBtn")
 let listOfLists = document.querySelector(".listOfLists");
 let docCurrentList = document.querySelector(".currentList");
 let docCurrentListItems = document.querySelector(".currentListItems");
-//lists contains objects {listID: id, listName: name, items: []}
+// lists contains objects {listID: id, listName: name, items: []}
 let lists = [];
 let currentList = '';
 let searchedItems;
 let completedTasks = [];
 
-//Enter key creates new list
+// Enter key creates new list
 newListName.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
         addList();
     }
 });
-//Global eventListener checking for clicks on dynamically created buttons
+
+// Checking if Add List button was clicked
+addListBtn.addEventListener("click", () => addList())
+
+// Global eventListener checking for clicks on dynamically created buttons
 document.addEventListener("click", (event) => {
-    //Checking if list was clicked
+    console.log(event.target)
+    // Checking if list was clicked
     if (event.target.classList.contains(`list`)) {
+        console.log
         lists.forEach(list => {
             const findID = document.getElementById(list.listID);
-            if (findID === event.target) {
+            if (findID.id === event.target.id) {
                 currentList = list;
             }
         })
     }
-    //Checking if button to delete list was clicked
+    // Checking if button to add task was clicked
+    else if (event.target.classList.contains('addTaskBtn')) {
+        addTask();
+    }
+    // Checking if button to delete list was clicked
     else if (event.target.classList.contains("dltListBtn")) {
         lists.forEach(list => {
             const findID = document.getElementById(list.listID);
@@ -44,7 +55,7 @@ document.addEventListener("click", (event) => {
             }
         })
     }
-    //Checking if task was clicked
+    // Checking if task was clicked
     else if (event.target.classList.contains("item")) {
         currentList.items.forEach(item => {
             const findID = document.getElementById(item.taskID);
@@ -61,17 +72,15 @@ document.addEventListener("click", (event) => {
             }
         })
     }
-    //Checking if button to delete task was clicked
+    // Checking if button to delete task was clicked
     else if (event.target.classList.contains("dltTaskBtn")) {
-        currentList.items.forEach(item => {
-            const findID = document.getElementById(item.taskID);
-            
+        currentList.items.forEach(item => {            
             // Removes completed tasks from array before deleting task
             completedTasks = completedTasks.filter(task => task.taskID != event.target.parentNode.parentNode.parentNode.id)
             currentList.items = currentList.items.filter(anItem => anItem.taskID != event.target.parentNode.parentNode.parentNode.id)
         })
     }
-    //Checking if button to edit task was clicked
+    // Checking if button to edit task was clicked
     else if (event.target.classList.contains("editTaskBtn")) {
         currentList.items.forEach(item => {
             const findID = document.getElementById(item.taskID);
@@ -84,7 +93,7 @@ document.addEventListener("click", (event) => {
             }
         })
     }
-    //Checking if Clear Completed button was clicked
+    // Checking if Clear Completed button was clicked
     else if (event.target.classList.contains("clearComplete")) {
         currentList.items.forEach(item => {
             const removeTask = completedTasks.filter(task => task.taskID === item.taskID)
@@ -99,20 +108,20 @@ document.addEventListener("click", (event) => {
     }
     displayLists();
 });
-//Global eventListener checking for keydown on dynamically created objects
+// Global eventListener checking for keydown on dynamically created objects
 document.addEventListener("keydown", (event) => {
-    //Enter key creates new task
+    // Enter key creates new task
     if (event.key === "Enter") {
         if (event.target.classList.contains("enterTaskName")) {
             addTask();
         }
     }
 });
-//Global eventListener checking for input on dynamically created objects
+// Global eventListener checking for input on dynamically created objects
 document.addEventListener("input", (event) => {
-    //Checking if text is being entered in task search bar
+    // Checking if text is being entered in task search bar
     if (event.target.classList.contains("searchTaskField")) {
-        //Compares search bar text to item list and adds matches to array
+        // Compares search bar text to item list and adds matches to array
         const searchBar = document.querySelector(".searchTaskField");
         searchedItems = [];
         if (searchBar.value !== "") {
@@ -129,7 +138,7 @@ document.addEventListener("input", (event) => {
     }
 });
 
-//Creates new list and calls displayLists()
+// Creates new list and calls displayLists()
 function addList() {
     let newListID = Math.floor(Math.random() * 1000);
     if (newListName.value !== "") {
@@ -151,7 +160,7 @@ function addList() {
     }
     displayLists();
 }
-//Creates new task and calls displayLists()
+// Creates new task and calls displayLists()
 function addTask() {
     const newTaskName = document.querySelector(".enterTaskName");
     let newTaskID = Math.floor(Math.random() * 1000);
@@ -172,10 +181,11 @@ function addTask() {
     }
     displayLists();
 }
-//Renders list of lists, and current list
+// Renders list of lists, and current list
 function displayLists() {
-    // save();
-    //Display list of lists
+    console.log(currentList)
+    save();
+    // Display list of lists
     let listsHTML = "";
     if (lists.length > 0) {
         lists.forEach(list => {
@@ -187,18 +197,19 @@ function displayLists() {
     }
 
     listOfLists.innerHTML = listsHTML;
-    //Setting up currentList
+    // Setting up currentList
     let currentListHTML = "";
     if (currentList !== "") {
-        //Display current list name and Add Task button
+        // Display current list name and Add Task button
         currentListHTML += `<span class="fs-1"></>${currentList.listName}</span>`;
         currentListHTML += `
         <div class="d-flex">
-            <div class="form-floating w-25 my-3 me-5">
+            <div class="form-floating d-flex w-1/2 my-3 me-5">
                 <input type="text" class="form-control enterTaskName" id="enterTaskName" placeholder="Enter Task">
                 <label for="enterTaskName">Enter Task</label>
+                <button type="button" class="btn btn-dark ms-3 px-4 addTaskBtn">Add Task</button>
             </div>
-            <div class="form-floating w-25 my-3 ms-5">
+            <div class="form-floating w-1/2 my-3 ms-5">
                 <input type="text" class="form-control searchTaskField" id="searchTaskField" placeholder="Search For A Task">
                 <label for="searchTaskField">Search For A Task</label>
             </div>
@@ -207,9 +218,9 @@ function displayLists() {
     docCurrentList.innerHTML = currentListHTML;
     displayListItems();
 }
-//Renders current list's items
+// Renders current list's items
 function displayListItems() {
-    //Setting up currentList items
+    // Setting up currentList items
     let itemsHTML = "";
     if (currentList !== "") {
         // Display items of current list
@@ -234,9 +245,9 @@ function displayListItems() {
 
     docCurrentListItems.innerHTML = itemsHTML;
 }
-//Renders searched items
+// Renders searched items
 function displayItemSearch() {
-    //Setting up currentList items
+    // Setting up currentList items
     let itemsHTML = "";
     if (currentList !== "") {
         // Display items of current list
@@ -259,13 +270,13 @@ function displayItemSearch() {
     }
     docCurrentListItems.innerHTML = itemsHTML;
 }
-//Save list of lists and current list
+// Save list of lists and current list
 function save() {
     localStorage.setItem("lists", JSON.stringify(lists));
     localStorage.setItem("currentList", JSON.stringify(currentList));
     localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
 }
-//Gets saved lists and current list and makes sure they are not undefined/null
+// Gets saved lists and current list and makes sure they are not undefined/null
 function retrieve() {
     const storedLists = localStorage.getItem("lists");
     if (storedLists !== undefined && storedLists !== null) {
@@ -282,5 +293,5 @@ function retrieve() {
     displayLists();
 }
 
-//Checks to see if there is any stored lists/currentList when page initializes
-// retrieve();
+// Checks to see if there is any stored lists/currentList when page initializes
+retrieve();

@@ -1,5 +1,4 @@
 # To Do
-- [ ] Re-enable save() and retrieve() functions
 - [ ] Add clickable buttons
 ## Potential Future Features
 - Search List
