@@ -140,7 +140,7 @@ document.addEventListener("input", (event) => {
 function addList() {
     let newListID = Math.floor(Math.random() * 1000);
     if (newListName.value !== "") {
-        if (lists !== null && lists.length > 0) {
+        if (lists.length > 0) {
             lists.forEach(list => {
                 if (list.listID === newListID) {
                     newListID = Math.floor(Math.random() * 1000);
@@ -185,7 +185,7 @@ function displayLists() {
     save();
     // Display list of lists
     let listsHTML = "";
-    if (lists !== null && lists.length > 0) {
+    if (lists.length > 0) {
         lists.forEach(list => {
             listsHTML += `
             <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2 ${currentList.listID === list.listID ? "active" : ""} list" id="${list.listID}">${list.listName}
