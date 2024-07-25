@@ -4,3 +4,5 @@
 ## Potential Future Features
 - Search List
 - Change Completed symbol to a checkmark
+- Add a */* tasks completed next to list title
+- Add list-item word break
