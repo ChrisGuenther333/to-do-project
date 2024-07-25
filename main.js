@@ -201,13 +201,13 @@ function displayLists() {
         // Display current list name and Add Task button
         currentListHTML += `<span class="fs-1"></>${currentList.listName}</span>`;
         currentListHTML += `
-        <div class="d-flex align-items-center">
-            <div class="form-floating d-flex my-3 me-2">
-                <input type="text" class="form-control enterTaskName" id="enterTaskName" placeholder="Enter Task">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="form-floating d-flex align-items-center my-3">
+                <input type="text" class="form-control me-2 enterTaskName" id="enterTaskName" placeholder="Enter Task">
                 <label for="enterTaskName">Enter Task</label>
+                <button type="button" class="btn btn-dark px-3 addTaskBtn">Add Task</button>
             </div>
-            <button type="button" class="btn btn-dark py-3 addTaskBtn">Add Task</button>
-            <div class="form-floating ms-5">
+            <div class="form-floating">
                 <input type="text" class="form-control searchTaskField" id="searchTaskField" placeholder="Search For A Task">
                 <label for="searchTaskField">Search For A Task</label>
             </div>
@@ -226,12 +226,12 @@ function displayListItems() {
         currentList.items.forEach(item => {
             itemsHTML += `
             <li class="list-group-item list-group-item-action text-start py-2 item ${item.complete ? "text-success" : ""}" id="${item.taskID}">
-                <div class="d-flex align-items-center item">
-                    <div class="w-50 me-5 item">${item.task}</div>
-                    <div class="px-5 d-flex align-items-center item">
+                <div class="d-flex align-items-center justify-content-between item">
+                    <div class="me-5 overflow-auto item">${item.task}</div>
+                    <div class="d-flex align-items-center item">
                         <button type="button" class="btn btn-light me-5 editTaskBtn">Edit</button>
-                        <button type="button" class="btn-close me-5 dltTaskBtn" aria-label="Close"></button>
-                        ${item.complete ? `<span class="border border-success rounded-pill px-2">Completed</span>` : ""}
+                        <button type="button" class="btn-close  dltTaskBtn" aria-label="Close"></button>
+                        ${item.complete ? `<span class="border border-success rounded-pill ms-5 px-2">Completed</span>` : ""}
                     </div>
                 </div>
             </li>`;
