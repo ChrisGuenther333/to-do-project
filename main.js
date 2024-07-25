@@ -202,12 +202,12 @@ function displayLists() {
         currentListHTML += `<span class="fs-1"></>${currentList.listName}</span>`;
         currentListHTML += `
         <div class="d-flex align-items-center justify-content-between">
-            <div class="form-floating d-flex align-items-center my-3">
+            <div class="form-floating d-flex flex-grow-1 align-items-center my-3 me-5">
                 <input type="text" class="form-control me-2 enterTaskName" id="enterTaskName" placeholder="Enter Task">
                 <label for="enterTaskName">Enter Task</label>
-                <button type="button" class="btn btn-dark px-3 addTaskBtn">Add Task</button>
+                <button type="button" class="btn btn-dark w-25 py-3 addTaskBtn">Add Task</button>
             </div>
-            <div class="form-floating">
+            <div class="form-floating flex-grow-1 ms-5">
                 <input type="text" class="form-control searchTaskField" id="searchTaskField" placeholder="Search For A Task">
                 <label for="searchTaskField">Search For A Task</label>
             </div>
