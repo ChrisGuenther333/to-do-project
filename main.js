@@ -229,9 +229,9 @@ function displayListItems() {
                 <div class="d-flex align-items-center justify-content-between item">
                     <div class="me-5 overflow-auto item">${item.task}</div>
                     <div class="d-flex align-items-center item">
+                        ${item.complete ? `<span class="border border-success rounded-pill me-3 px-2">Completed</span>` : ""}
                         <button type="button" class="btn btn-light me-5 editTaskBtn">Edit</button>
                         <button type="button" class="btn-close dltTaskBtn" aria-label="Close"></button>
-                        ${item.complete ? `<span class="border border-success rounded-pill ms-5 px-2">Completed</span>` : ""}
                     </div>
                 </div>
             </li>`;
