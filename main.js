@@ -19,66 +19,58 @@ newListName.addEventListener("keydown", (event) => {
 document.addEventListener("click", (event) => {
     //Checking if list was clicked
     if (event.target.classList.contains(`list`)) {
-        for (let key in lists) {
-            const findID = document.getElementById(lists[key].listID);
+        lists.forEach(list => {
+            const findID = document.getElementById(list.listID);
             if (findID === event.target) {
-                currentList = lists[key];
+                currentList = list;
             }
-        }
+        })
     }
     //Checking if button to delete list was clicked
     else if (event.target.classList.contains("dltListBtn")) {
-        for (let key in lists) {
-            const findID = document.getElementById(lists[key].listID);
-            if (findID === event.target.parentNode) {
-                // Removes completed tasks from array before deleting list
-                const findTask = completedTasks.filter(task =>
-                    task.id === key.id)
-                completedTasks.splice(findTask, 1);
+        lists.forEach(list => {
+            const findID = document.getElementById(list.listID);
 
-                const deletedList = lists.splice(key, 1);
+            if (findID.id === event.target.parentNode.id) {
+
+                // Removes completed tasks from array before deleting list
+                completedTasks = completedTasks.filter(task => !list.items.includes(task))
+                const deletedList = lists.filter(aList => aList.listID == findID.id);
+                lists = lists.filter(aList => aList.listID !== deletedList[0].listID)
+
                 if (currentList.listID === deletedList[0].listID) {
                     currentList = "";
                 }
             }
-            console.log(`List deleted:`, completedTasks)
 
-        }
+        })
     }
     //Checking if task was clicked
     else if (event.target.classList.contains("item")) {
-        for (let curkey in currentList.items) {
-            const findID = document.getElementById(currentList.items[curkey].taskID);
+        currentList.items.forEach(item => {
+            const findID = document.getElementById(item.taskID);
+
             if (findID && (findID.id === event.target.id || findID.id === event.target.parentNode.id || findID.id === event.target.parentNode.parentNode.id || findID.id === event.target.parentNode.parentNode.parentNode.id)) {
-                if (currentList.items[curkey].complete === false) {
-                    currentList.items[curkey].complete = true;
-                    completedTasks.push(currentList.items[curkey]);
-                } else {
-                    currentList.items[curkey].complete = false;
-                    for (let compkey in completedTasks) {
-                        if (completedTasks[compkey].taskID === currentList.items[curkey].taskID) {
-                            completedTasks.splice(compkey, 1);
-                        }
-                    }
+                if (item.complete === false) {
+                    item.complete = true;
+                    completedTasks.push(item);
+                }
+                else {
+                    item.complete = false;
+                    completedTasks = completedTasks.filter(task => task.taskID !== item.taskID)
                 }
             }
-        }
-        console.log(`Task clicked:`, completedTasks)
+        })
     }
     //Checking if button to delete task was clicked
     else if (event.target.classList.contains("dltTaskBtn")) {
-        for (let key in currentList.items) {
-            // Removes completed tasks from array before deleting task
-            const findID = document.getElementById(currentList.items[key].taskID);
-            const findTask = completedTasks.filter(task =>
-                task.id === findID.id)
-            completedTasks.splice(findTask, 1);
-            if (findID === event.target.parentNode.parentNode.parentNode) {
-                currentList.items.splice(key, 1);
-            }
-        }
-        console.log(`Task deleted:`, completedTasks)
+        currentList.items.forEach(item => {
+            const findID = document.getElementById(item.taskID);
+                // Removes completed tasks from array before deleting task
+            completedTasks = completedTasks.filter(task => task.taskID != event.target.parentNode.parentNode.parentNode.id)
+            currentList.items = currentList.items.filter(anItem => anItem.taskID != event.target.parentNode.parentNode.parentNode.id)
 
+        })
     }
     //Checking if button to edit task was clicked
     else if (event.target.classList.contains("editTaskBtn")) {
@@ -94,8 +86,6 @@ document.addEventListener("click", (event) => {
     }
     //Checking if Clear Completed button was clicked
     else if (event.target.classList.contains("clearComplete")) {
-        console.log(`Completed tasks before clear:`, completedTasks)
-        console.log(`Current list tasks before clear:`, currentList.items)
         for (let compkey in completedTasks) {
             for (let curkey in currentList.items) {
                 if (completedTasks[compkey].taskID === currentList.items[curkey].taskID) {
@@ -104,9 +94,6 @@ document.addEventListener("click", (event) => {
                 }
             }
         }
-        console.log(`Completed tasks after clear:`, completedTasks)
-        console.log(`Current list tasks before clear:`, currentList.items)
-
     }
     else {
         return;
