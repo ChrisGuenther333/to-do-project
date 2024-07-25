@@ -42,7 +42,6 @@ document.addEventListener("click", (event) => {
                     currentList = "";
                 }
             }
-
         })
     }
     //Checking if task was clicked
@@ -66,34 +65,34 @@ document.addEventListener("click", (event) => {
     else if (event.target.classList.contains("dltTaskBtn")) {
         currentList.items.forEach(item => {
             const findID = document.getElementById(item.taskID);
-                // Removes completed tasks from array before deleting task
+            
+            // Removes completed tasks from array before deleting task
             completedTasks = completedTasks.filter(task => task.taskID != event.target.parentNode.parentNode.parentNode.id)
             currentList.items = currentList.items.filter(anItem => anItem.taskID != event.target.parentNode.parentNode.parentNode.id)
-
         })
     }
     //Checking if button to edit task was clicked
     else if (event.target.classList.contains("editTaskBtn")) {
-        for (let key in currentList.items) {
-            const findID = document.getElementById(currentList.items[key].taskID);
-            if (findID === event.target.parentNode.parentNode.parentNode) {
+        currentList.items.forEach(item => {
+            const findID = document.getElementById(item.taskID);
+
+            if (findID.id === event.target.parentNode.parentNode.parentNode.id) {
                 let updateTaskName = window.prompt("Enter Task Name");
                 if (updateTaskName !== "" && updateTaskName !== null) {
-                    currentList.items[key].task = updateTaskName;
+                    item.task = updateTaskName;
                 }
             }
-        }
+        })
     }
     //Checking if Clear Completed button was clicked
     else if (event.target.classList.contains("clearComplete")) {
-        for (let compkey in completedTasks) {
-            for (let curkey in currentList.items) {
-                if (completedTasks[compkey].taskID === currentList.items[curkey].taskID) {
-                    currentList.items.splice(curkey, 1);
-                    completedTasks.splice(compkey, 1);
-                }
+        currentList.items.forEach(item => {
+            const removeTask = completedTasks.filter(task => task.taskID === item.taskID)
+            if (removeTask[0] !== null && removeTask[0] !== undefined) {
+                completedTasks = completedTasks.filter(task => task.taskID !== removeTask[0].taskID)
+                currentList.items = currentList.items.filter(anItem => anItem.taskID !== removeTask[0].taskID)
             }
-        }
+        })
     }
     else {
         return;
@@ -117,13 +116,14 @@ document.addEventListener("input", (event) => {
         const searchBar = document.querySelector(".searchTaskField");
         searchedItems = [];
         if (searchBar.value !== "") {
-            for (let key in currentList.items) {
-                if (currentList.items[key].task.toUpperCase().includes(searchBar.value.toUpperCase())) {
-                    searchedItems.push(currentList.items[key]);
+            currentList.items.forEach(item => {
+                if (item.task.toUpperCase().includes(searchBar.value.toUpperCase())) {
+                    searchedItems.push(item);
                 }
-            }
+            })
             displayItemSearch();
-        } else {
+        }
+        else {
             displayListItems();
         }
     }
@@ -134,11 +134,11 @@ function addList() {
     let newListID = Math.floor(Math.random() * 1000);
     if (newListName.value !== "") {
         if (lists.length > 0) {
-            for (let key in lists) {
-                if (lists[key].listID === newListID) {
+            lists.forEach(list => {
+                if (list.listID === newListID) {
                     newListID = Math.floor(Math.random() * 1000);
                 }
-            }
+            })
         }
         lists.push({
             listID: newListID,
@@ -149,7 +149,6 @@ function addList() {
     } else {
         window.alert("Please enter a list name.");
     }
-
     displayLists();
 }
 //Creates new task and calls displayLists()
@@ -171,7 +170,6 @@ function addTask() {
     } else {
         window.alert("Please enter a task.");
     }
-
     displayLists();
 }
 //Renders list of lists, and current list
@@ -216,7 +214,7 @@ function displayListItems() {
     if (currentList !== "") {
         // Display items of current list
         itemsHTML += '<ul class="list-group list-group-flush list-unstyled">';
-        currentList.items.forEach((item) => {
+        currentList.items.forEach(item => {
             itemsHTML += `
             <li class="list-group-item list-group-item-action text-start py-2 item ${item.complete ? "text-success" : ""}" id="${item.taskID}">
                 <div class="d-flex align-items-center item">
@@ -243,7 +241,7 @@ function displayItemSearch() {
     if (currentList !== "") {
         // Display items of current list
         itemsHTML += '<ul class="list-group list-group-flush list-unstyled">';
-        searchedItems.forEach((item) => {
+        searchedItems.forEach(item => {
             itemsHTML += `
             <li class="list-group-item list-group-item-action text-start py-2 item ${item.complete ? "text-success" : ""}" id="${item.taskID}">
                 <div class="d-flex align-items-center item">
@@ -270,30 +268,15 @@ function save() {
 //Gets saved lists and current list and makes sure they are not undefined/null
 function retrieve() {
     const storedLists = localStorage.getItem("lists");
-    if (
-        storedLists !== undefined &&
-        storedLists !== "undefined" &&
-        storedLists !== null &&
-        storedLists !== "null"
-    ) {
+    if (storedLists !== undefined && storedLists !== null) {
         lists = JSON.parse(storedLists);
     }
     const storedCurrentList = localStorage.getItem("currentList");
-    if (
-        storedCurrentList !== undefined &&
-        storedCurrentList !== "undefined" &&
-        storedCurrentList !== null &&
-        storedCurrentList !== "null"
-    ) {
+    if (storedCurrentList !== undefined && storedCurrentList !== null) {
         currentList = JSON.parse(storedCurrentList);
     }
     const storedCompletedTasks = localStorage.getItem("completedTasks");
-    if (
-        storedCompletedTasks !== undefined &&
-        storedCompletedTasks !== "undefined" &&
-        storedCompletedTasks !== null &&
-        storedCompletedTasks !== "null"
-    ) {
+    if (storedCompletedTasks !== undefined && storedCompletedTasks !== null) {
         completedTasks = JSON.parse(storedCompletedTasks);
     }
     displayLists();
